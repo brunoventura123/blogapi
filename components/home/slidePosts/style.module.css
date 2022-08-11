@@ -1,0 +1,51 @@
+.slideItem {
+    text-align: center;
+}
+
+.container {
+    width: 100%;
+}
+
+.posts {
+    display: flex;
+    list-style: none;
+}
+
+.postItem {
+    flex: 1;
+    font-size: 14px;
+    background-color: #4158D0;
+    background: #FFF;
+    max-height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px;
+
+}
+
+
+.postItem img {
+    object-fit: cover;
+    transition: all ease .3s;
+}
+
+.postItem:hover img {
+    transform: scale(1.1);
+}
+
+.postItem .title {
+    padding: 0 10px;
+    flex: 1;
+    line-height: 22px;
+    color: #777;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.postItem:hover .title {
+    text-decoration: underline;
+}

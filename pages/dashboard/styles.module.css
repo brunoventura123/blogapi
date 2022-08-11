@@ -1,0 +1,109 @@
+.formPost,
+.formSearch {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.formPost textarea {
+    width: 100%;
+    padding: 10px 10px;
+    border: 0;
+    outline: none;
+    margin-bottom: 20px;
+    resize: none;
+    height: 200px;
+    border-radius: 5px;
+}
+
+.label {
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: #FFF;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #333;
+}
+
+.label input {
+    width: 200px;
+}
+
+.formPost button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #df1010;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 50%;
+    transition: all ease .2s;
+}
+
+.formPost button:hover {
+    opacity: .8;
+}
+
+.formSearch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #FFF;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.formSearch input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    padding: 10px 5px 10px 5px;
+}
+
+.icon {
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.formSearch {
+    background-color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+    padding: 0 5px;
+}
+
+.formSearch input {
+    flex: 1;
+    width: 100%;
+    padding: 15px 0;
+    border: 0;
+    outline: none;
+    font-size: 16px;
+}
+
+.formSearch .icon {
+    color: #df1010;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.postsArea {
+    margin-top: 30px;
+}

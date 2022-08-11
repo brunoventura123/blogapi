@@ -1,0 +1,127 @@
+.container {
+    background-color: #FFF;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infos {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 100px;
+}
+
+.infos p {
+    color: #df1010;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.infos a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.infos span {
+    color: #000;
+}
+
+.infos p.text {
+    font-size: 15px;
+    color: #999;
+    line-height: 25px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+
+.social {}
+
+.social .icon {
+    margin-left: 10px;
+    padding: 7px;
+    font-size: 40px;
+    border: 1px solid #aaa;
+    color: #777;
+    cursor: pointer;
+    transition: all ease .3s;
+}
+
+.social .icon:hover {
+    background-color: #888;
+    color: #FFF;
+}
+
+
+.categories {
+    flex: 1;
+}
+
+.categories ul,
+.tags ul {
+    list-style: none;
+}
+
+.categories ul li,
+.tags ul li {
+    padding: 7px;
+    border: 1px solid #777;
+    display: inline-block;
+    margin: 0 10px 10px 0px;
+    color: #777;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all ease .3s;
+}
+
+.categories ul li:hover,
+.tags ul li:hover {
+    background-color: #777;
+    color: #FFF;
+}
+
+.categories h2,
+.tags h2 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.tags {
+    flex: 1;
+}
+
+.links {
+    flex: 1;
+}
+
+.links h2 {
+    margin-bottom: 30px;
+}
+
+.links ul {
+    list-style: none;
+}
+
+.links ul li {
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: #777;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+.links ul li:hover {
+    text-decoration: underline;
+}
+
+.links ul li .icon {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px;
+}

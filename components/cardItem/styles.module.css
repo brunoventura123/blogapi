@@ -1,0 +1,64 @@
+.container {}
+
+.card {
+    box-shadow: 0 0 3px #444;
+    transition: all ease .3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0 0 8px #444;
+    transform: scale(1.1);
+}
+
+.image {
+    background-color: #FFF;
+}
+
+.areaInfos {
+    padding: 20px;
+    background-color: #FFF;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.card:hover h2 {
+    text-decoration: underline;
+    color: #df1010;
+}
+
+.category {
+    margin-bottom: 20px;
+}
+
+.category span {
+    color: #df1010;
+    cursor: pointer;
+}
+
+.category span:hover {
+    text-decoration: underline;
+}
+
+.category p {
+    color: #777;
+    font-size: 14px;
+}
+
+.linkCat a {
+    text-decoration: none;
+    color: #df1010;
+}
+
+.title h2 {
+    color: #444;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.title h2:hover {
+    color: #df1010;
+    text-decoration: underline;
+}

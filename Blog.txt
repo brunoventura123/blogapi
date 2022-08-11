@@ -1,0 +1,65 @@
+Blog
+Pages:
+- Home
+- Categorys
+- CategoryPosts
+- Post
+- Contact
+
+- Home:
+-- Menu
+-- Banner Slider
+-- Slide posts 
+-- Categorys
+-- four area category posts (slider)
+-- Footer
+
+- Categorys
+-- Menu
+-- One Exemplo of witch category
+-- Newsletter
+-- Footer
+
+- CategoryPosts
+-- Menu
+-- All posts witch pagination
+-- Newsletter
+-- Footer
+
+- Post
+-- Menu
+-- Banner
+-- Body
+-- Comments
+-- New Comments
+-- Footer
+
+- Contact
+-- Menu
+-- Endreess
+-- Contact form
+-- Footer
+
+Endpoints:
+- /categorys/:[slug]/posts (pegar posts por categoria)
+- /categorys/:[slug]/posts/[id] (pegar post único)
+
+Techs:
+- Nextjs
+- Swiper
+- styled-components
+- prisma com postgresql
+
+BANCO DE DADOS
+- tabela de usuarios
+-- id, name, email, profession, avatar, active, commentId[]
+
+- tabela de Comments
+-- id, body, userId, createdAt
+
+- tabela de posts
+-- id, categoryId, title, photo[], body, createdAt
+
+- tabela de categorys
+-- id, postsId[], name, photo
+

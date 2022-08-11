@@ -1,0 +1,122 @@
+.container {
+    padding: 20px 50px;
+}
+
+.linkLine {
+    color: #777;
+    font-size: 14px;
+}
+
+.linkLine span {
+    color: #df1010;
+    cursor: pointer;
+}
+
+.linkLine span:hover {
+    text-decoration: underline;
+}
+
+.title {
+    background-color: #FFF;
+    padding: 10px 20px;
+    color: #333;
+    font-size: 28px;
+    margin-top: 20px;
+}
+
+.contactArea {
+    display: flex;
+    margin-top: 20px;
+}
+
+.address {
+    padding: 30px;
+    background-color: #FFF;
+    width: 450px;
+}
+
+.address h3 {
+    color: #333;
+    font-size: 15px;
+}
+
+.address p {
+    color: #777;
+    font-size: 15px;
+    line-height: 24px;
+    padding: 15px 50px 15px 0;
+}
+
+
+.address .iconText {
+    display: flex;
+    align-items: center;
+}
+
+.address .iconText span {
+    margin-left: 20px;
+}
+
+.iconText .areaImage {
+    padding-bottom: 20px;
+}
+
+.contactForm {
+    padding: 30px;
+    background-color: #FFF;
+    flex: 1;
+    margin-left: 30px;
+}
+
+.contactForm .form {
+    width: 100%;
+}
+
+.form input,
+.form textarea {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid #999;
+}
+
+.form textarea {
+    height: 150px;
+}
+
+.form button {
+    background-color: #df1010;
+    color: #FFF;
+    padding: 20px;
+    border: 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all ease .3s;
+}
+
+.form button:hover {
+    background-color: #b90d0d;
+}
+
+.contactForm p {
+    width: 100%;
+    display: flex;
+}
+
+.contactForm p input {
+    flex: 1;
+}
+
+.contactForm p input:nth-child(1) {
+    margin-right: 20px;
+}
+
+.error {
+    margin-bottom: 10px;
+    padding: 8px;
+    color: #FFF;
+    background-color: #b90d0d;
+    font-size: 12px;
+}

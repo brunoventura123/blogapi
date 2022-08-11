@@ -1,0 +1,38 @@
+.container {
+    padding: 20px 50px;
+}
+
+.areaPosts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cardsFeutered {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px 10px;
+}
+
+.news {
+    padding-left: 10px;
+}
+
+.buttonMore {
+    background-color: #df1010;
+    border: 0;
+    padding: 10px 20px;
+    color: #FFF;
+    cursor: pointer;
+    transition: all ease .2s;
+    border-radius: 5px;
+    text-align: center;
+    width: 20%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+.buttonMore:hover {
+    background-color: #aa0e0e;
+}

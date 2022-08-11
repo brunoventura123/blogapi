@@ -1,0 +1,16 @@
+.areaInput {
+    width: 100%;
+    border: 0;
+    outline: none;
+    margin-bottom: 20px;
+    background-color: #FFF;
+    border-radius: 5px;
+}
+
+.areaInput input {
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: none;
+    padding: 10px 10px;
+}

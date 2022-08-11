@@ -1,0 +1,138 @@
+.slidePosts {
+    padding: 30px 50px;
+    width: 100%;
+}
+
+.bannerAreaHome {
+    display: flex;
+    padding: 0 0px 0px 50px;
+    width: 100%;
+
+}
+
+.swiperHome {
+    padding: 0;
+    width: 100%;
+}
+
+.slideHome {
+    font-size: 14px;
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slideHome .areaSlide {
+    display: flex;
+    height: 100%;
+    padding: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+
+}
+
+.slideHome .areaSlide img {
+    object-fit: cover;
+    opacity: .9;
+}
+
+.slideHome .areaSlide .infos {
+    padding: 30px;
+    flex: 1;
+    line-height: 35px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    color: #FFF;
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    background-image: linear-gradient(transparent, rgba(0, 0, 0, 1));
+}
+
+.slideHome .areaSlide .infos:hover h2 {
+    text-decoration: underline;
+}
+
+.slideHome .areaSlide .infos h2 {
+    text-align: left;
+}
+
+.slideHome .areaSlide .infos .span {
+    font-size: 14px;
+}
+
+.categoriesArea {
+    width: 700px;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.categoriesArea .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF;
+    padding: 10px 25px;
+}
+
+.categoriesArea .title h2 {
+    font-size: 30px;
+    color: #333;
+}
+
+.categoriesArea .title a {
+    text-decoration: none;
+    color: #777;
+}
+
+.categoriesArea .title a:hover {
+    color: #555;
+}
+
+.section {
+    margin: 20px 0 0 0px;
+    padding: 20px 50px;
+}
+
+.boxArea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.cardsMore {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.cardsFeutered {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.cardNewsLetter {
+    display: flex;
+}
+
+.newsLetter {
+    padding: 20px;
+}

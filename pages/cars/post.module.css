@@ -1,0 +1,237 @@
+.container {
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.linkLine {
+    padding: 30px 50px 10px 50px;
+}
+
+.linkLine span {
+    cursor: pointer;
+}
+
+.linkLine span:nth-child(1) {
+    color: #df1010;
+}
+
+.linkLine span:hover {
+    color: #df1010;
+
+}
+
+.linkLine span:nth-child(3) {
+    color: #333;
+    cursor: auto;
+}
+
+.container .notice {
+    flex: 1;
+    background-color: #FFF;
+}
+
+.container .notice .float {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.areaPost {
+    background-color: #FFF;
+    padding: 40px;
+}
+
+.areaPost .infos {
+    color: #666;
+    font-size: 18px;
+}
+
+.areaPost .infos a {
+    color: #df1010;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.areaPost .infos span:hover {
+    text-decoration: underline;
+}
+
+.areaPost h1 {
+    margin-top: 20px;
+    font-size: 28px;
+    color: #333;
+}
+
+.areaPost p,
+.areaPost .text {
+    margin-top: 20px;
+    color: #777;
+    font-size: 18px;
+    line-height: 25px;
+    float: left;
+}
+
+.areaPost span .img,
+.areaPost span .text {
+    display: inline-block;
+    text-align: justify;
+    float: left;
+}
+
+
+.areaPost .divImage {
+    float: left;
+}
+
+.principal {
+    text-align: justify;
+    color: #000;
+    height: 100%;
+    padding: 20px 0px;
+    text-indent: 5%;
+    color: #777;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.principal div {
+    float: left;
+    margin-right: 15px;
+    text-indent: 0;
+}
+
+.infoArea {
+    width: 400px;
+    padding: 0px 0px 0 30px;
+}
+
+.infoArea .infoAreaImage {
+    padding-top: 30px;
+}
+
+.infoArea .morePosts {
+    margin-top: 30px;
+}
+
+.infoArea .morePosts h2 {
+    background-color: #FFF;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    color: #333;
+    font-size: 30px;
+}
+
+
+
+.infoArea .morePosts .areaPostMore {
+    display: flex;
+    margin-bottom: 20px;
+    background-color: #FFF;
+    width: auto;
+    height: 80px;
+}
+
+.areaPostMore div {
+    width: 80px;
+    height: 80px;
+}
+
+.areaPostMore img {
+    width: 80px;
+    height: 80px;
+}
+
+.areaPostMore .titlePost {
+    flex: 1;
+    padding: 0 0px;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.areaPostMore:hover .titlePost {
+    text-decoration: underline;
+}
+
+.leftSide {
+    display: flex;
+    flex-direction: column;
+}
+
+.comments,
+.formComment {
+    background-color: #FFF;
+    padding: 20px 20px 20px 0;
+    margin-top: 30px;
+}
+
+.formComment h2,
+.comments h2 {
+    margin-bottom: 30px;
+    padding: 20px 0 0 30px;
+}
+
+.form {
+    padding-left: 30px;
+}
+
+.form textarea {
+    width: 100%;
+    padding: 10px;
+    height: 150px;
+    outline: none;
+    border: 1px solid #666;
+
+}
+
+.moreComments {
+    margin-left: 50px;
+}
+
+.form button,
+.moreComments {
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+    outline: none;
+    background-color: #df1010;
+    color: #FFF;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all ease .2s;
+}
+
+.form button:hover,
+.moreComments:hover {
+    background-color: #c70f0f;
+}
+
+.login {
+    padding: 30px;
+    text-align: center;
+}
+
+.login a {
+    color: #c70f0f;
+}
+
+.infos {
+    display: flex;
+    align-items: center;
+    text-align: justify;
+}
+
+.loginButton {
+    outline: none;
+    border: 0;
+    color: #c70f0f;
+    font-size: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+}

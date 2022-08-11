@@ -1,0 +1,118 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    height: 50px;
+    background-color: #FFF;
+    box-shadow: 0 4px 2px -2px gray;
+    margin-top: -1px;
+}
+
+.container nav {
+    height: 100%;
+}
+
+.contLink {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    height: 100%;
+}
+
+
+
+.linkItem {
+    padding: 15px 0px;
+    height: 100%;
+    transition: all ease .3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.linkItem:hover {
+    background-color: #df1010;
+    color: #FFF;
+}
+
+.linkItem a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    padding: 15px 15px;
+}
+
+
+.linkItem a:hover {
+    color: #fff;
+}
+
+
+.linkActive {
+    color: #FFF;
+    background-color: #df1010;
+}
+
+.linkActive a {
+    color: #FFF;
+}
+
+.areaLoginSearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.areaLoginSearch a {
+    text-decoration: none;
+    color: #0fb950;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.input {
+    width: 300px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #999;
+}
+
+
+.input input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+.icon {
+    width: 50px;
+    height: 100%;
+    background-color: #f2f2f2;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.areaLoginSearch button {
+    outline: none;
+    border: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-left: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all ease .3s;
+}
+
+.areaLoginSearch button:hover {
+    color: #df1010;
+}
