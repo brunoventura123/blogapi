@@ -116,3 +116,20 @@
 .areaLoginSearch button:hover {
     color: #df1010;
 }
+
+.locale {
+    display: flex;
+    list-style: none;
+}
+
+.locale a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    color: #000;
+    font-weight: bold;
+}
+
+.locale a:hover {
+    color: #df1010;
+}

@@ -235,3 +235,7 @@
     font-weight: bold;
     text-decoration: underline;
 }
+
+.loginButton:hover {
+    color: #df1010;
+}

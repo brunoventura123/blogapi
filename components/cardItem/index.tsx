@@ -16,7 +16,7 @@ const CardItem = ({ id, image, category, title, date }: Props) => {
     const router = useRouter()
     let newDate = date.substring(0, 10).split('-').reverse().join('/') as string
     const catNew: string = `${category.substring(0, 1).toUpperCase()}${category.substring(1)}` as string
-    const catTitle = `${(catNew === 'Cars' ? 'Carros' : (catNew === 'Beauty') ? 'Beleza' : (catNew === 'Formula1') ? 'Formula 1' : (catNew === 'Food' ? 'Comida' : ''))}`
+    const catTitle = `${router.locale === 'pt' ? ((catNew === 'Cars' ? 'Carros' : (catNew === 'Beauty') ? 'Beleza' : (catNew === 'Formula1') ? 'Formula 1' : (catNew === 'Food' ? 'Comida' : ''))) : ((catNew === 'Cars' ? 'Cars' : (catNew === 'Beauty') ? 'Beauty' : (catNew === 'Formula1') ? 'Formula 1' : (catNew === 'Food' ? 'Food' : '')))}`
     return (
         <div className={styles.container}>
             <Link href={`/${category}/${id}`}>
@@ -27,7 +27,7 @@ const CardItem = ({ id, image, category, title, date }: Props) => {
 
                     <div className={styles.areaInfos}>
                         <div className={styles.category}>
-                            <p><span className={styles.linkCat}><Link href={`/${category?.toString()}`}>{catTitle}</Link></span> - {newDate}</p>
+                            <p><span className={styles.linkCat}><Link href={`/${category?.toString()}`}>{catTitle}</Link></span> | {router.locale === 'pt' ? newDate : date.substring(0, 10)}</p>
                         </div>
 
                         <div className={styles.title}>

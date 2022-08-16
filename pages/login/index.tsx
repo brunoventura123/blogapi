@@ -6,8 +6,12 @@ import React, { FormEvent, ReactEventHandler, useState } from "react"
 import { Router, useRouter } from "next/router"
 import axios from "axios"
 import { signIn, useSession } from "next-auth/react"
+import { GetServerSideProps } from "next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const Login = () => {
+    const { t } = useTranslation()
     const { data: session, status: sessionStatus } = useSession()
     const router = useRouter()
     const [email, setEmail] = useState('')
@@ -47,11 +51,11 @@ const Login = () => {
     return (
         <div>
             <Head>
-                <title>Login</title>
+                <title>{t('login')}</title>
             </Head>
 
             <div style={{ backgroundImage: `url(${bg})` }} className={styles.container}>
-                <h1 style={{ margin: '50px 0 30px 0' }}>Faça seu login</h1>
+                <h1 style={{ margin: '50px 0 30px 0' }}>{t('login')}</h1>
                 {error &&
                     <p className={styles.error}>{error}</p>
                 }
@@ -62,7 +66,7 @@ const Login = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="email"
-                            placeholder="E-mail"
+                            placeholder={t('lEmail')}
                             disabled={loading}
                             className={styles.input}
                             required
@@ -73,7 +77,7 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
-                            placeholder="Senha"
+                            placeholder={t('lPass')}
                             disabled={loading}
                             className={styles.input}
                             required
@@ -89,19 +93,27 @@ const Login = () => {
                             disabled={loading}
                             className={styles.check}
                         />
-                        Lembrar minha senha
+                        {t('remember')}
                     </label>
                     <button
                         className={styles.loginButton}
                         disabled={disebled}
                         onClick={handleSignIn}
-                    >Entrar</button>
+                    >{t('logIn')}</button>
 
                 </form>
-                <p className={styles.redirect}>Se não tem uma conta, faça seu cadastro<Link href={`${session ? '/login' : '/register'}`}> clicando aqui!</Link></p>
+                <p className={styles.redirect}>{t('isRegister')} <Link href={`${session ? '/login' : '/register'}`}>{`${t('click')}!`}</Link></p>
             </div>
         </div>
     )
 }
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+    // DRY = Dont Repeat Yourself
 
+    return {
+        props: {
+            ... (await serverSideTranslations(locale as string, ['common']))
+        }
+    }
+}
 export default Login

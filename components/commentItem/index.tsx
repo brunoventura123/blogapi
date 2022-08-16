@@ -12,13 +12,13 @@ type Props = {
     name: string
     avatar: string
     userId: number
+    del: string
 }
 
-export const CommentItem = ({ body, id, dateCom, name, avatar, userId }: Props) => {
+export const CommentItem = ({ body, id, dateCom, name, avatar, userId, del }: Props) => {
     const newDate = dateCom.toString().substring(0, 10).split('-').reverse().join('/') as string
     const router = useRouter()
     const { data: session, status: sessionStatus } = useSession()
-    console.log(session)
     const handleDelete = async () => {
         await axios.delete(`/api/comments/${id}`)
         window.location.href = `/cars/${router.query.id}`
@@ -31,11 +31,11 @@ export const CommentItem = ({ body, id, dateCom, name, avatar, userId }: Props) 
             </div>
             <div className={styles.areaInfo}>
                 <div className={styles.areaData}>
-                    <p className={styles.name}><span>{`${name.substring(0, 1).toUpperCase()}${name.substring(1).split(' ').splice(0, 1)}`} </span> - {newDate}</p>
+                    <p className={styles.name}><span>{`${name.substring(0, 1).toUpperCase()}${name.substring(1).split(' ').splice(0, 1)}`} </span>|  {router.locale === 'en' ? dateCom.toString().substring(0, 10) : newDate}</p>
                     <p className={styles.text}>{body}</p>
                 </div>
                 {session?.user.id === userId &&
-                    <button onClick={handleDelete}>Excluir</button>
+                    <button onClick={handleDelete}>{del}</button>
                 }
             </div>
         </div>

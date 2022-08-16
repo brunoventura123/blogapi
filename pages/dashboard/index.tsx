@@ -8,14 +8,15 @@ const Dashboard = () => {
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('')
     const [text, setText] = useState('')
+    const [language, setLanguage] = useState('')
     const [files, setFiles] = useState('')
 
     const handlePost = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const avatar = `https://logodownload.org/wp-content/uploads/2014/09/google-logo-0.png`
-        if (title && category && text) {
+        if (title && category && text && language) {
             const post = await axios.post(`/api/posts`, {
-                title, body: text, category, avatar
+                title, body: text, category, avatar, language
             })
 
             if (post.status) {
@@ -47,6 +48,14 @@ const Dashboard = () => {
                         label="Categoria"
                         value={category}
                         onChange={setCategory}
+                    />
+                </label>
+                <label htmlFor="">
+                    <Input
+                        type="text"
+                        label="Idioma"
+                        value={language}
+                        onChange={setLanguage}
                     />
                 </label>
                 <label htmlFor="">

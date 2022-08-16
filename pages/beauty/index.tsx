@@ -1,4 +1,8 @@
 import axios from "axios"
+import { t } from "i18next"
+import { GetServerSideProps } from "next"
+import { useTranslation } from "next-i18next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -15,6 +19,7 @@ type Props = {
 }
 
 const Beauty = ({ beauty }: Props) => {
+    const { t } = useTranslation()
     const router = useRouter()
     const [showMore, setShowMore] = useState(true)
     const [loading, setLoading] = useState(false)
@@ -37,13 +42,18 @@ const Beauty = ({ beauty }: Props) => {
     }
 
     return (
-        <Theme>
+        <Theme
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
+            t={[t('room'), t('news')]}
+            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
+
+        >
             <div className={styles.container}>
                 <Head>
-                    <title>Sala de Notícias - Beleza</title>
+                    <title>{t('title')} | {t('beauty')}</title>
                 </Head>
                 <div className={styles.areaPosts}>
-                    <TitleBar title="Beleza" />
+                    <TitleBar title={t('beauty')} />
                     <div className={styles.cardsFeutered}>
                         {postList.map((post, key) => (
                             <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={post.title} />
@@ -51,25 +61,27 @@ const Beauty = ({ beauty }: Props) => {
 
                     </div>
                     {showMore &&
-                        <button className={styles.buttonMore} onClick={handleMorePosts}>Carregar mais</button>
+                        <button className={styles.buttonMore} onClick={handleMorePosts}>{t('loadMore')}</button>
                     }
                     {loading &&
                         <div>Carregando...</div>
                     }
                 </div>
                 <div className={styles.news}>
-                    <NewsLetter />
+                    <NewsLetter news={t('news')} />
                 </div>
             </div>
         </Theme>
     )
 }
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     // DRY = Dont Repeat Yourself
-    const beauty = await api.getPostForCat(1, 8, 'beauty')
+    const beauty = await api.getPostForCat(1, 8, 'beauty', locale as string)
+    const t = await serverSideTranslations(locale as string, ['common'])
     return {
         props: {
-            beauty: JSON.parse(JSON.stringify(beauty))
+            beauty: JSON.parse(JSON.stringify(beauty)),
+            ...t
         }
     }
 }

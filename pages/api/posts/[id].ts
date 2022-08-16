@@ -3,8 +3,8 @@ import apiPosts from "../../../libs/apiPosts";
 import prisma from '../../../libs/prisma'
 
 const handlerGet: NextApiHandler = async (req, res) => {
-    const { id, page, qt, cat } = req.query
-    const post = await apiPosts.getUnique(parseInt(id as string), parseInt(page as string), cat as string)
+    const { id, page, qt, cat, language } = req.query
+    const post = await apiPosts.getUnique(parseInt(id as string), parseInt(page as string), cat as string, language as string)
     res.json({ status: true, post })
 }
 

@@ -8,8 +8,12 @@ import Head from "next/head"
 import { FormEvent, useState } from "react"
 import axios from "axios"
 import { useRouter } from "next/router"
+import { useTranslation } from "next-i18next"
+import { GetServerSideProps } from "next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 const Contact = () => {
+    const { t } = useTranslation()
     const router = useRouter()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -37,37 +41,42 @@ const Contact = () => {
 
     }
     return (
-        <Theme>
+        <Theme
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
+            t={[t('room'), t('news')]}
+            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
+
+        >
             <div className={styles.container}>
                 <Head>
-                    <title>Sala de Notícias - Contato</title>
+                    <title>{t('title')} | {t('contact')}</title>
                 </Head>
                 <div className={styles.linkLine}>
-                    <span>Início </span>/ Contato
+                    <span>{t('home')} </span>/ {t('contact')}
                 </div>
-                <h2 className={styles.title}>Entre em Contato</h2>
+                <h2 className={styles.title}>{t('contactNow')}</h2>
                 <div className={styles.contactArea}>
                     <div className={styles.address}>
-                        <h3>Entrar em contato</h3>
+                        <h3>{t('contactNow')}</h3>
                         <p>Vero blanditiis expedita aspernatur consectetur distinctio esse dignissimos, cumque neque delectus error nostrum mollitia hic voluptatum asperiores assumenda.</p>
                         <div className={styles.iconText}>
                             <div className={styles.areaImage}><Image className={styles.icon} src={phoneIcon} alt="" /></div>
                             <span>
-                                <h3>Nosso Escritório</h3>
+                                <h3>{t('ourOffice')}</h3>
                                 <p>Rua Nova nº23, Maria Lúcia, Manaus</p>
                             </span>
                         </div>
                         <div className={styles.iconText}>
                             <div className={styles.areaImage}><Image className={styles.icon} src={emailIcon} alt="" /></div>
                             <span>
-                                <h3>Nosso E-mail</h3>
+                                <h3>{t('ourEmail')}</h3>
                                 <p>suporte@nossaloja.com.br</p>
                             </span>
                         </div>
                         <div className={styles.iconText}>
                             <div className={styles.areaImage}><Image className={styles.icon} src={localIcon} alt="" /></div>
                             <span>
-                                <h3>Ligue para nós</h3>
+                                <h3>{t('callUs')}</h3>
                                 <p>55 (33) 99999-8888</p>
                             </span>
                         </div>
@@ -81,7 +90,7 @@ const Contact = () => {
                                 <input
                                     className="input"
                                     type="text"
-                                    placeholder="Seu nome"
+                                    placeholder={t('name')}
                                     value={name}
                                     onChange={e => setName(e.target.value)}
 
@@ -89,7 +98,7 @@ const Contact = () => {
                                 <input
                                     className="input"
                                     type="email"
-                                    placeholder="Seu e-mail"
+                                    placeholder={t('yourEmail')}
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
 
@@ -98,24 +107,33 @@ const Contact = () => {
                             <input
                                 className="input"
                                 type="text"
-                                placeholder="Assunto"
+                                placeholder={t('subject')}
                                 value={subject}
                                 onChange={e => setSubject(e.target.value)}
 
                             />
                             <textarea
                                 className="input"
-                                placeholder="Menssagem"
+                                placeholder={t('message')}
                                 value={menssage}
                                 onChange={e => setMenssage(e.target.value)}
 
                             ></textarea>
-                            <button>Enviar Menssagem</button>
+                            <button>{t('sendM')}</button>
                         </form>
                     </div>
                 </div>
             </div>
         </Theme>
     )
+}
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+    // DRY = Dont Repeat Yourself
+    const t = await serverSideTranslations(locale as string, ['common'])
+    return {
+        props: {
+            ...t
+        }
+    }
 }
 export default Contact

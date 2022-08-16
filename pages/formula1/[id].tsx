@@ -18,6 +18,9 @@ import { Post } from "../../types/posts"
 import { GetServerSideProps, GetServerSidePropsContext } from "next"
 import { signIn, useSession } from "next-auth/react"
 import { AuthUser } from "../../types/AuthUser"
+import { useTranslation } from "next-i18next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import Fomula1 from "."
 
 
 type Props = {
@@ -27,6 +30,7 @@ type Props = {
 }
 
 const PostItem = ({ formula1, loggedUser }: Props) => {
+    const { t } = useTranslation()
     const { data: session, status: sessionStatus } = useSession()
     const router = useRouter()
     const [menssage, setMenssage] = useState('')
@@ -39,10 +43,10 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
 
     const postUnique = async () => {
         const { id } = router.query
-        const res = await axios.get(`/api/posts/${id}`)
+        const res = await axios.get(`/api/posts/${id}?language=${router.locale as string}`)
         if (res.data.status) {
             return setPostUni(JSON.parse(JSON.stringify(res.data.post)))
-        } else { alert('Post não encontrados.') }
+        } else { alert('Post não encontrado.') }
 
     }
     const getComments = async () => {
@@ -87,13 +91,18 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
     const catNew: string = `${postUni?.category.substring(0, 1).toUpperCase()}${postUni?.category.substring(1)}` as string
     let newDate = postUni?.createdAt.toString().substring(0, 10).split('-').reverse().join('/')
     return (
-        <Theme>
+        <Theme
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
+            t={[t('room'), t('news')]}
+            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
+
+        >
             <Head>
-                <title>{`Sala de Notícias - ${postUni?.title}`}</title>
+                <title>{`${t('title')} | ${postUni?.title}`}</title>
             </Head>
             <div className={styles.linkLine}>
-                <Link href={`/`}><span>Início /</span></Link>
-                <Link href="/formula1"><span> {`${postUni?.category.substring(0, 1).toUpperCase()}${postUni?.category.substring(1)}`} / </span></Link>
+                <Link href={`/`}><span>{t('home')} /</span></Link>
+                <Link href="/formula1"><span> {t('formula1')} /</span></Link>
                 <span className={styles.blackTitle}> {postUni?.title}</span>
 
             </div>
@@ -105,11 +114,9 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
                             <div className={styles.infos}>
                                 <span
                                     style={{ fontSize: '16px' }}>
-                                    <Link href={`/formula1`}>{catNew}</Link>
-                                </span>
-                                <div
-                                    style={{ marginLeft: '10px', fontSize: '16px' }}>
-                                    {newDate}
+                                    <Link href={`/formula1`}>{t('formula1')}</Link>
+                                </span> <div style={{ marginLeft: '10px', fontSize: '16px' }}>
+                                    {router.locale === 'en' ? postUni?.createdAt.toString().substring(0, 10) : newDate}
                                 </div>
                             </div>
                             <h1>{`${postUni?.title}`}</h1>
@@ -124,7 +131,7 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
                     </div>
                     <div>
                         <div className={styles.comments}>
-                            <h2>{commentList.length} {commentList.length < 2 ? 'Comentário' : 'Comentários'}</h2>
+                            <h2>{commentList.length} {commentList.length < 2 ? `${t('comment')}` : `${t('comments')}`}</h2>
 
                             {commentList.map((i, k) => (
                                 <CommentItem
@@ -135,39 +142,48 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
                                     name={i.User.name}
                                     avatar={i.User.avatar}
                                     userId={i.userId}
+                                    del={t('delete')}
                                 />
                             ))}
 
-                            {showMore && commentList.length > 0 &&
-                                <button className={styles.moreComments} onClick={handleMoreComments}>Carregar mais</button>
+                            {showMore && commentList.length !== 0 &&
+                                <button className={styles.moreComments} onClick={handleMoreComments}>{t('loadMore')}</button>
                             }
                         </div>
                         {sessionStatus == 'authenticated' &&
                             <div className={styles.formComment}>
-                                <h2>Deixe um comentário </h2>
-                                <form className={styles.form} action="">
+                                <h2>{t('leaveComment')}</h2>
+                                <form className={styles.form} onSubmit={handleNewComment}>
                                     <textarea
-                                        placeholder="Mensagem"
+                                        placeholder={t('message')}
                                         value={menssage}
                                         onChange={e => setMenssage(e.target.value)}
                                         maxLength={300}
                                     />
-                                    <button onClick={handleNewComment}>Postar comentário</button>
+                                    <button >{t('postComment')}</button>
                                 </form>
                             </div>
                         }
-                        {sessionStatus == 'unauthenticated' && <h2 className={styles.login}>Faça <button onClick={() => signIn()} className={styles.loginButton}>login</button> para postar comentários!</h2>}
+                        {sessionStatus == 'unauthenticated' && <h2 className={styles.login}>{t('make')}<button onClick={() => signIn()} className={styles.loginButton}>Login</button> {t('post')}</h2>}
                     </div>
                 </div>
                 <div className={styles.infoArea}>
-                    <NewsLetter />
+                    <NewsLetter news={t('newsMail')} />
                     <div className={styles.infoAreaImage}>
                         <Image src={beauty} alt="" />
                     </div>
                     <div className={styles.morePosts}>
-                        <h2>Mais Posts</h2>
+                        <h2>{t('morePosts')}</h2>
                         {formula1.map((i, k) => (
-                            <div key={k} className={styles.areaPostMore}><div><Image src={avatar} width={80} height={80} alt="Avatar" /></div><a className={styles.titlePost} href={`/formula1/${i.id.toString()}`}>{i.title}</a></div>
+                            <div
+                                key={k}
+                                className={styles.areaPostMore}>
+                                <div>
+                                    <Image src={avatar} width={80} height={80} alt="Avatar" />
+                                </div>
+                                <a className={styles.titlePost} href={`/cars/${i.id.toString()}`}>{i.title}</a>
+                            </div>
+
                         ))}
                     </div>
                 </div>
@@ -183,12 +199,14 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         context.req, context.res, authOptions
     )
     if (!session) return { redirect: { destination: '/', permanent: true } }*/
+    const { locale } = context
+    const formula1 = await apiPosts.getPostForCat(1, 9, 'formula1', locale as string)
 
-    const formula1 = await apiPosts.getPostForCat(1, 9, 'formula1')
     return {
         props: {
             //loggedUser: session.user,
-            formula1: JSON.parse(JSON.stringify(formula1))
+            formula1: JSON.parse(JSON.stringify(formula1)),
+            ... (await serverSideTranslations(locale as string, ['common']))
         }
     }
 }

@@ -14,11 +14,12 @@ import { FormEvent, useEffect, useState } from "react"
 import { Comment } from "../../types/comment"
 import { useRouter } from "next/router"
 import { Post } from "../../types/posts"
-import { Photo } from "../../types/photo"
 import { GetServerSideProps, GetServerSidePropsContext } from "next"
 import { signIn, useSession } from "next-auth/react"
 import { AuthUser } from "../../types/AuthUser"
 import apiPosts from "../../libs/apiPosts"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 
 type Props = {
@@ -27,6 +28,7 @@ type Props = {
 }
 
 const PostItem = ({ cars, loggedUser }: Props) => {
+    const { t } = useTranslation()
     const { data: session, status: sessionStatus } = useSession()
     const router = useRouter()
     const [menssage, setMenssage] = useState('')
@@ -93,13 +95,18 @@ const PostItem = ({ cars, loggedUser }: Props) => {
     const newDate = post?.createdAt.toString().substring(0, 10).split('-').reverse().join('/') as string
     const catNew: string = `${post?.category.substring(0, 1).toUpperCase()}${post?.category.substring(1)}` as string
     return (
-        <Theme>
+        <Theme
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
+            t={[t('room'), t('news')]}
+            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
+
+        >
             <Head>
-                <title>{`Sala de Notícias - ${post?.title}`}</title>
+                <title>{`${t('title')} - ${post?.title}`}</title>
             </Head>
             <div className={styles.linkLine}>
-                <Link href={`/`}><span>Início /</span></Link>
-                <Link href="/cars"><span> {(catNew === 'Cars') ? 'Carros' : 'error'} /</span></Link>
+                <Link href={`/`}><span>{t('home')} /</span></Link>
+                <Link href="/cars"><span> {t('cars')} /</span></Link>
                 <span className={styles.blackTitle}> {post?.title}</span>
 
             </div>
@@ -111,9 +118,9 @@ const PostItem = ({ cars, loggedUser }: Props) => {
                             <div className={styles.infos}>
                                 <span
                                     style={{ fontSize: '16px' }}>
-                                    <Link href={`/cars`}>{(catNew) ? 'Carros' : ''}</Link>
+                                    <Link href={`/cars`}>{t('cars')}</Link>
                                 </span> <div style={{ marginLeft: '10px', fontSize: '16px' }}>
-                                    {newDate}
+                                    {router.locale === 'en' ? post?.createdAt.toString().substring(0, 10) : newDate}
                                 </div>
                             </div>
                             <h1>{`${post?.title}`}</h1>
@@ -128,7 +135,7 @@ const PostItem = ({ cars, loggedUser }: Props) => {
                     </div>
                     <div>
                         <div className={styles.comments}>
-                            <h2>{commentList.length} {commentList.length < 2 ? 'Comentário' : 'Comentários'}</h2>
+                            <h2>{commentList.length} {commentList.length < 2 ? `${t('comment')}` : `${t('comments')}`}</h2>
 
                             {commentList.map((i, k) => (
                                 <CommentItem
@@ -139,37 +146,38 @@ const PostItem = ({ cars, loggedUser }: Props) => {
                                     name={i.User.name}
                                     avatar={i.User.avatar}
                                     userId={i.userId}
+                                    del={t('delete')}
                                 />
                             ))}
 
                             {showMore && commentList.length !== 0 &&
-                                <button className={styles.moreComments} onClick={handleMoreComments}>Carregar mais</button>
+                                <button className={styles.moreComments} onClick={handleMoreComments}>{t('loadMore')}</button>
                             }
                         </div>
                         {sessionStatus == 'authenticated' &&
                             <div className={styles.formComment}>
-                                <h2>Deixe um comentário </h2>
+                                <h2>{t('leaveComment')}</h2>
                                 <form className={styles.form} onSubmit={handleNewComment}>
                                     <textarea
-                                        placeholder="Mensagem"
+                                        placeholder={t('message')}
                                         value={menssage}
                                         onChange={e => setMenssage(e.target.value)}
                                         maxLength={300}
                                     />
-                                    <button >Postar comentário</button>
+                                    <button >{t('postComment')}</button>
                                 </form>
                             </div>
                         }
-                        {sessionStatus == 'unauthenticated' && <h2 className={styles.login}>Faça <button onClick={() => signIn()} className={styles.loginButton}>login</button> para postar comentários!</h2>}
+                        {sessionStatus == 'unauthenticated' && <h2 className={styles.login}>{t('make')}<button onClick={() => signIn()} className={styles.loginButton}>Login</button> {t('post')}</h2>}
                     </div>
                 </div>
                 <div className={styles.infoArea}>
-                    <NewsLetter />
+                    <NewsLetter news={t('newsMail')} />
                     <div className={styles.infoAreaImage}>
                         <Image src={beauty} alt="" />
                     </div>
                     <div className={styles.morePosts}>
-                        <h2>Mais Posts</h2>
+                        <h2>{t('morePosts')}</h2>
                         {cars.map((i, k) => (
                             <div
                                 key={k}
@@ -197,10 +205,13 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     if (!session) return { redirect: { destination: '/', permanent: true } }*/
 
     const cars = await apiPosts.getPostForCat(1, 9, 'cars')
+
+
     return {
         props: {
             //loggedUser: session.user,
-            cars: JSON.parse(JSON.stringify(cars))
+            cars: JSON.parse(JSON.stringify(cars)),
+            ... (await serverSideTranslations(context.locale as string, ['common']))
         }
     }
 }

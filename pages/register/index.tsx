@@ -12,8 +12,11 @@ import { GetServerSideProps } from "next"
 import { unstable_getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]"
 import { FileHandle } from "fs/promises"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useTranslation } from "next-i18next"
 
 const Register = () => {
+    const { t } = useTranslation()
     const router = useRouter()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -56,11 +59,11 @@ const Register = () => {
     return (
         <div>
             <Head>
-                <title>Cadastro</title>
+                <title>{t('rRegister')}</title>
             </Head>
 
             <div style={{ backgroundImage: `url(${bg})` }} className={styles.container}>
-                <h1>Faça seu Cadastro</h1>
+                <h1>{t('register')}</h1>
                 {error &&
                     <p className={styles.error}>{error}</p>
                 }
@@ -70,7 +73,7 @@ const Register = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             type="text"
-                            placeholder="Nome"
+                            placeholder={t('rName')}
                             disabled={disabled}
                             className={styles.input}
                         />
@@ -80,14 +83,14 @@ const Register = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="email"
-                            placeholder="E-mail"
+                            placeholder={t('lEmail')}
                             disabled={disabled}
                             className={styles.input}
                         />
                     </label>
 
                     <label htmlFor="file" className={styles.inputArea} style={{ cursor: 'pointer', alignItems: 'center', padding: '13px 15px' }} >
-                        <p style={{ flex: 1 }}>Sua foto <span style={{ fontSize: '12px' }}> (Apenas aquivos png, jpg e jpeg)</span></p>
+                        <p style={{ flex: 1 }}>{t('photo')} <span style={{ fontSize: '12px' }}> ({t('onlyFiles')} png, jpg e jpeg)</span></p>
                         <input
                             id="file"
                             type="file"
@@ -102,7 +105,7 @@ const Register = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Senha"
+                            placeholder={t('lPass')}
                             disabled={disabled}
                             className={styles.input}
                         />
@@ -118,7 +121,7 @@ const Register = () => {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             type={showPassword2 ? 'text' : 'password'}
-                            placeholder="Confirmar Senha"
+                            placeholder={t('confirmPass')}
                             disabled={disabled}
                             className={styles.input}
                         />
@@ -133,11 +136,11 @@ const Register = () => {
                         disabled={disabled}
                         className={styles.button}
                         type="submit"
-                        value="Cadastrar"
+                        value={t('rRegister')}
                     />
 
                 </form>
-                <p className={styles.redirect}>Se já tem uma conta, faça seu login<Link href={`/login`}> clicando aqui!</Link></p>
+                <p className={styles.redirect}>{t('isAccount')} <Link href={`/login`}>{`${t('click')}!`}</Link></p>
 
             </div>
         </div>
@@ -152,7 +155,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
         props: {
-
+            ... (await serverSideTranslations(context.locale as string, ['common']))
         }
     }
 }
