@@ -1,4 +1,4 @@
-describe('Cars', () => {
+describe('Carspage', () => {
     beforeEach(() => {
         cy.visit('/cars')
     })
@@ -7,3 +7,4 @@ describe('Cars', () => {
         cy.get('button:contains("Load More")').should('not.exist')
     })
 })
+export { }

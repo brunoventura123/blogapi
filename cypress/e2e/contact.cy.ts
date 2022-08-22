@@ -15,3 +15,4 @@ describe('Contact', () => {
         cy.contains('Highlights')
     })
 })
+export { }

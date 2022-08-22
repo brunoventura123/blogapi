@@ -16,3 +16,4 @@ describe('Home', () => {
         cy.url().should('include', '/login')
     });
 })
+export { }

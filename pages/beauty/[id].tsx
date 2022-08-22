@@ -92,6 +92,7 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
         postUnique()
         getComments()
     }, [])
+
     const catNew: string = `${postUni?.category.substring(0, 1).toUpperCase()}${postUni?.category.substring(1)}` as string
     let newDate = postUni?.createdAt.toString().substring(0, 10).split('-').reverse().join('/')
     return (
