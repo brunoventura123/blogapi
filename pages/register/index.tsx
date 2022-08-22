@@ -89,15 +89,15 @@ const Register = () => {
                         />
                     </label>
 
-                    <label htmlFor="file" className={styles.inputArea} style={{ cursor: 'pointer', alignItems: 'center', padding: '13px 15px' }} >
-                        <p style={{ flex: 1 }}>{t('photo')} <span style={{ fontSize: '12px' }}> ({t('onlyFiles')} png, jpg e jpeg)</span></p>
+                    <label htmlFor="file" className={styles.areaFile} >
+                        <p className={styles.file}>{t('photo')} <span style={{ fontSize: '12px' }}> ({t('onlyFiles')} png, jpg e jpeg)</span></p>
                         <input
                             id="file"
                             type="file"
                             name="file"
                             value={file}
                             disabled={disabled}
-                            style={{ width: '200px', cursor: 'pointer', }}
+
                         />
                     </label>
                     <label htmlFor="" className={styles.inputArea}>

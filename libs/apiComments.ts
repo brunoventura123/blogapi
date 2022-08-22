@@ -11,7 +11,7 @@ export default {
         const comments = await prisma.comment.findMany({
             take,
             skip,
-            where: { postId },
+            where: { postId, },
             select: {
                 id: true,
                 body: true,
@@ -25,6 +25,9 @@ export default {
                         avatar: true
                     }
                 }
+            },
+            orderBy: {
+                id: 'desc'
             }
         })
         return comments

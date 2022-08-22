@@ -7,14 +7,15 @@ type Props = {
     t: string[]
 }
 
+
 export const Logo = ({ t }: Props) => {
     return (
         <div className={styles.container}>
             <div className={styles.infos}>
-                <Link href={`/`}><p>{t[1]}<span>{t[0]}</span></p></Link>
+                <Link href={`/`}><p>{t[0]}<span>{t[1]}</span></p></Link>
             </div>
             <div className={styles.ad}>
-                <Image src={bkpnet} alt="" width={300} height={68} />
+                <Image src={bkpnet} alt="" />
             </div>
         </div>
     )

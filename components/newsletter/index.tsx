@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import styles from './style.module.css'
 
@@ -6,7 +7,15 @@ type Props = {
 }
 
 export const NewsLetter = ({ news }: Props) => {
+    const { t } = useTranslation()
     const [email, setEmail] = useState('')
+    const [show, setShow] = useState(false)
+    const handleSubmit = () => {
+        setShow(true)
+        setTimeout(() => {
+            setEmail('')
+        }, 500)
+    }
     return (
         <div className={styles.container}>
             <h2>{news}</h2>
@@ -16,15 +25,18 @@ export const NewsLetter = ({ news }: Props) => {
                     <input
                         className={styles.input1}
                         type="email"
-                        placeholder={(news === 'News' ? 'YOUR EMAIL' : 'SEU E-MAIL')}
+                        placeholder={t('yourEmail')}
                         name='email'
                         required
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
-                    <input type="hidden" name="name" value={`Bruno`} />
+                    <input type="hidden" name="name" value={`Cadastro de e-mail.`} />
                     <input type="hidden" name="_next" value="http://localhost:3000/tanks" />
                     <input type="hidden" name="_captcha" value="false" />
-                    <input className={styles.input2} type="submit" value={(news === 'News' ? 'SUBMIT' : 'ENVIAR')} />
+                    <button className={styles.input2} onClick={handleSubmit}>{t('send')}</button>
                 </form>
+                {show && <div style={{ color: 'green', padding: '10px 0', textAlign: 'center' }}>E-mail cadastrado com sucesso!</div>}
                 <p>{(news === 'News' ? 'You will only receive a maximum of one email per day' : 'Você só receberá no máximo um e-mail por dia')}</p>
             </div>
         </div>

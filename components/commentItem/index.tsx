@@ -13,15 +13,16 @@ type Props = {
     avatar: string
     userId: number
     del: string
+    load: () => void
 }
 
-export const CommentItem = ({ body, id, dateCom, name, avatar, userId, del }: Props) => {
+export const CommentItem = ({ body, id, dateCom, name, avatar, userId, del, load }: Props) => {
     const newDate = dateCom.toString().substring(0, 10).split('-').reverse().join('/') as string
     const router = useRouter()
     const { data: session, status: sessionStatus } = useSession()
     const handleDelete = async () => {
         await axios.delete(`/api/comments/${id}`)
-        window.location.href = `/cars/${router.query.id}`
+        load()
     }
 
     return (
@@ -35,7 +36,7 @@ export const CommentItem = ({ body, id, dateCom, name, avatar, userId, del }: Pr
                     <p className={styles.text}>{body}</p>
                 </div>
                 {session?.user.id === userId &&
-                    <button onClick={handleDelete}>{del}</button>
+                    <button className={styles.button} onClick={handleDelete}>{del}</button>
                 }
             </div>
         </div>

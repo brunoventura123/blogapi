@@ -1,8 +1,12 @@
 import styles from './styles.module.css'
+import w from '../../public/images/w.jpg'
 import car from '../../public/images/car.jpeg'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { createClient } from 'pexels';
 
 type Props = {
     id: number
@@ -15,14 +19,15 @@ type Props = {
 const CardItem = ({ id, image, category, title, date }: Props) => {
     const router = useRouter()
     let newDate = date.substring(0, 10).split('-').reverse().join('/') as string
-    const catNew: string = `${category.substring(0, 1).toUpperCase()}${category.substring(1)}` as string
-    const catTitle = `${router.locale === 'pt' ? ((catNew === 'Cars' ? 'Carros' : (catNew === 'Beauty') ? 'Beleza' : (catNew === 'Formula1') ? 'Formula 1' : (catNew === 'Food' ? 'Comida' : ''))) : ((catNew === 'Cars' ? 'Cars' : (catNew === 'Beauty') ? 'Beauty' : (catNew === 'Formula1') ? 'Formula 1' : (catNew === 'Food' ? 'Food' : '')))}`
+    const catNew = `${category.substring(0, 1).toUpperCase()}${category.substring(1)}` as string
+    const catTitle = `${router.locale === 'pt' ? ((catNew === 'Cars' ? 'Carros' : (catNew === 'Beauty') ? 'Beleza' : (catNew === 'Formula1') ? 'Fórmula 1' : (catNew === 'Food' ? 'Comida' : ''))) : ((catNew === 'Cars' ? 'Cars' : (catNew === 'Beauty') ? 'Beauty' : (catNew === 'Formula1') ? 'Formula 1' : (catNew === 'Food' ? 'Food' : '')))}`
+
     return (
         <div className={styles.container}>
             <Link href={`/${category}/${id}`}>
                 <div className={styles.card} >
                     <div className={styles.image}>
-                        <Image src={car} alt="" />
+                        <Image src={w} alt="" />
                     </div>
 
                     <div className={styles.areaInfos}>

@@ -41,3 +41,19 @@
     animation-duration: 5s;
     animation-iteration-count: infinite;
 }
+
+@media (max-width: 767px) {
+    .container {
+        height: 60px;
+        padding: 0 20px;
+    }
+
+    .infos p {
+        font-size: 20px;
+    }
+
+    .ad img {
+        width: 130px !important;
+        height: 34px;
+    }
+}

@@ -15,9 +15,11 @@ import styles from '../cars/styles.module.css'
 
 type Props = {
     formula1: Post[]
+    posts: Post[]
 }
 
-const Fomula1 = ({ formula1 }: Props) => {
+const Fomula1 = ({ formula1, posts }: Props) => {
+    const router = useRouter()
     const { t } = useTranslation()
     const [showMore, setShowMore] = useState(true)
     const [loading, setLoading] = useState(false)
@@ -40,20 +42,21 @@ const Fomula1 = ({ formula1 }: Props) => {
 
     return (
         <Theme
-            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
-            t={[t('room'), t('news')]}
+            posts={posts}
+            t={[t('news'), t('room')]}
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
             footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <div className={styles.container}>
                 <Head>
-                    <title>{t('title')} | {t('formula1')}</title>
+                    <title>{t('title')} | {t('formula1').toUpperCase()}</title>
                 </Head>
                 <div className={styles.areaPosts}>
                     <TitleBar title={t('formula1')} />
                     <div className={styles.cardsFeutered}>
                         {postList.map((post, key) => (
-                            <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={post.title} />
+                            <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={router.locale === 'pt' ? post.title : post.titleen} />
                         ))}
 
                     </div>
@@ -61,11 +64,11 @@ const Fomula1 = ({ formula1 }: Props) => {
                         <button className={styles.buttonMore} onClick={handleMorePosts}>{t('loadMore')}</button>
                     }
                     {loading &&
-                        <div>Carregando...</div>
+                        <div style={{ textAlign: 'center', color: '#df1010', fontWeight: 'bold' }}>Carregando...</div>
                     }
                 </div>
                 <div className={styles.news}>
-                    <NewsLetter news={t('news')} />
+                    <NewsLetter news={t('newsMail')} />
                 </div>
             </div>
         </Theme>
@@ -73,12 +76,14 @@ const Fomula1 = ({ formula1 }: Props) => {
 }
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     // DRY = Dont Repeat Yourself
-    const formula1 = await api.getPostForCat(1, 8, 'formula1', locale as string)
+    const formula1 = await api.getPostForCat(1, 8, 'formula1')
+    const posts = await api.getPostForCat(0, 20, undefined)
     const t = await serverSideTranslations(locale as string, ['common'])
 
     return {
         props: {
             formula1: JSON.parse(JSON.stringify(formula1)),
+            posts: JSON.parse(JSON.stringify(posts)),
             ...t
         }
     }

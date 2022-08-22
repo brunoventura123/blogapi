@@ -11,8 +11,14 @@ import { useRouter } from "next/router"
 import { useTranslation } from "next-i18next"
 import { GetServerSideProps } from "next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { Post } from "../../types/posts"
+import apiPosts from "../../libs/apiPosts"
 
-const Contact = () => {
+type Props = {
+    posts: Post[]
+}
+
+const Contact = ({ posts }: Props) => {
     const { t } = useTranslation()
     const router = useRouter()
     const [name, setName] = useState('')
@@ -42,8 +48,9 @@ const Contact = () => {
     }
     return (
         <Theme
-            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
-            t={[t('room'), t('news')]}
+            posts={posts}
+            t={[t('news'), t('room')]}
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
             footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
@@ -86,14 +93,14 @@ const Contact = () => {
                             <p className={styles.error}>{error}</p>
                         }
                         <form className={styles.form} action="" onSubmit={handleContactForm}>
-                            <p>
+                            <p className={styles.areaName}>
                                 <input
                                     className="input"
                                     type="text"
                                     placeholder={t('name')}
                                     value={name}
                                     onChange={e => setName(e.target.value)}
-
+                                    id="name"
                                 />
                                 <input
                                     className="input"
@@ -101,7 +108,7 @@ const Contact = () => {
                                     placeholder={t('yourEmail')}
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
-
+                                    id="email"
                                 />
                             </p>
                             <input
@@ -110,14 +117,14 @@ const Contact = () => {
                                 placeholder={t('subject')}
                                 value={subject}
                                 onChange={e => setSubject(e.target.value)}
-
+                                id="subject"
                             />
                             <textarea
                                 className="input"
                                 placeholder={t('message')}
                                 value={menssage}
                                 onChange={e => setMenssage(e.target.value)}
-
+                                id="message"
                             ></textarea>
                             <button>{t('sendM')}</button>
                         </form>
@@ -129,9 +136,11 @@ const Contact = () => {
 }
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     // DRY = Dont Repeat Yourself
+    const posts = await apiPosts.getPostForCat(0, 20, undefined)
     const t = await serverSideTranslations(locale as string, ['common'])
     return {
         props: {
+            posts: JSON.parse(JSON.stringify(posts)),
             ...t
         }
     }

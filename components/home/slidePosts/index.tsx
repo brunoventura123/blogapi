@@ -6,6 +6,10 @@ import Link from 'next/link';
 import { Post } from '../../../types/posts';
 import { useRouter } from 'next/router';
 
+import w from '../../../public/images/w.jpg'
+import woman from '../../../public/images/woman.jpg'
+import man from '../../../public/images/man.jpg'
+import car from '../../../public/images/carred.jpg'
 
 
 type Props = {
@@ -13,7 +17,7 @@ type Props = {
 }
 
 const SliderPosts = ({ posts }: Props) => {
-
+    const photos = [w, woman, man, car]
     const router = useRouter()
     return (
         <div className={styles.container}>
@@ -22,10 +26,10 @@ const SliderPosts = ({ posts }: Props) => {
                     <li
                         key={key}
                         className={styles.postItem}>
-                        <Image src={avatar} width={80} height={80} alt="Avatar" />
+                        <Image src={photos[key]} width={80} height={80} alt="Avatar" />
                         <Link href={`/${post.category}/${post.id}`}>
                             <p className={styles.title}>
-                                {(post.title.length > 60) ? post.title.substring(0, 60) + '...' : post.title}
+                                {router.locale === 'pt' ? (post.title.length > 50) ? post.title.substring(0, 50) + '...' : post.title : (post.title.length > 50) ? post.titleen.substring(0, 50) + '...' : post.titleen}
                             </p>
                         </Link>
                     </li>

@@ -1,7 +1,9 @@
 export type Post = {
     id: number
     title: string
+    titleen: string
     body: string
+    bodyen: string
     category: string
     createdAt: Date
     comments: {

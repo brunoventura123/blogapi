@@ -2,9 +2,8 @@ import Head from "next/head"
 import styles from './styles.module.css'
 import bg from '../../public/images/f2.jpg'
 import Link from "next/link"
-import React, { FormEvent, ReactEventHandler, useState } from "react"
-import { Router, useRouter } from "next/router"
-import axios from "axios"
+import React, { FormEvent, useState } from "react"
+import { useRouter } from "next/router"
 import { signIn, useSession } from "next-auth/react"
 import { GetServerSideProps } from "next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
@@ -70,6 +69,7 @@ const Login = () => {
                             disabled={loading}
                             className={styles.input}
                             required
+                            id="email"
                         />
                     </label>
                     <label htmlFor="" className={styles.inputArea}>
@@ -81,10 +81,11 @@ const Login = () => {
                             disabled={loading}
                             className={styles.input}
                             required
+                            id="password"
                         />
                     </label>
 
-                    <label htmlFor="remember" style={{ color: '#FFF', cursor: 'pointer' }}>
+                    <label className={styles.checkLabel} htmlFor="remember" style={{ color: '#FFF', cursor: 'pointer' }}>
                         <input
                             id="remember"
                             checked={rememberPassword}
@@ -108,11 +109,11 @@ const Login = () => {
     )
 }
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-    // DRY = Dont Repeat Yourself
+    const t = await serverSideTranslations(locale as string, ['common'])
 
     return {
         props: {
-            ... (await serverSideTranslations(locale as string, ['common']))
+            ...t
         }
     }
 }

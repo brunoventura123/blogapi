@@ -28,11 +28,44 @@
     transition: all ease .2s;
     border-radius: 5px;
     text-align: center;
-    width: 20%;
+    width: 200px;
     margin: auto;
     margin-bottom: 30px;
 }
 
 .buttonMore:hover {
     background-color: #aa0e0e;
+}
+
+@media (max-width: 1075px) {
+    .cardsFeutered {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 20px;
+    }
+
+    .news {
+        padding: 0;
+    }
+
+    .cardsFeutered {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0;
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 550px) {
+    .container {
+        padding: 20px 10px;
+    }
+
+    .cardsFeutered {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
 }

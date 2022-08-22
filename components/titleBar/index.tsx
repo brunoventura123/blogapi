@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import styles from './styles.module.css'
 
 type Props = {
@@ -9,13 +8,12 @@ type Props = {
 }
 
 const TitleBar = ({ title, slug, all }: Props) => {
-    const router = useRouter()
     return (
         <div className={styles.container}>
             <div className={styles.title}>
                 <h2>{title}</h2>
                 {slug &&
-                    <Link href={`/${slug}`}>{all}</Link>
+                    <Link href={`/${slug}`}><a>{all}</a></Link>
                 }
             </div>
         </div>

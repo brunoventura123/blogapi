@@ -1,5 +1,6 @@
 .container {
     max-width: 370px;
+    position: relative;
 }
 
 .container h2 {
@@ -13,6 +14,7 @@
 .box {
     background-color: #FFF;
     padding: 20px;
+    position: relative;
 }
 
 .box p {
@@ -33,6 +35,7 @@ p.text {
 .input {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 
 .input input {
@@ -40,6 +43,7 @@ p.text {
     outline: none;
     border: 1px solid #777;
     border-right: 0;
+    width: 100%;
 }
 
 .input .input1 {
@@ -49,7 +53,7 @@ p.text {
 
 .input .input2 {
     padding: 0 10px;
-    width: 70px;
+    width: fit-content;
     background-color: #e40e0e;
     border: none;
     cursor: pointer;
@@ -59,4 +63,41 @@ p.text {
 
 .input .input2:hover {
     opacity: .9;
+}
+
+@media (max-width: 767px) {
+
+    .container,
+    .box {
+        width: 100%;
+
+    }
+
+    .container h2 {
+        font-size: 20px;
+    }
+
+    .container .text {
+        font-size: 14px;
+    }
+
+    .box p {
+        font-size: 11px;
+    }
+
+    .box {
+        padding: 10px;
+    }
+
+    .input1::placeholder,
+    .input .input2 {
+        font-size: 14px;
+
+    }
+
+    .input .input2,
+    .input1 {
+        font-size: 12px;
+        padding: 10px;
+    }
 }

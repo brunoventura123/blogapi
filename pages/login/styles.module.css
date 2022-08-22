@@ -7,6 +7,7 @@
     align-items: center;
     flex-direction: column;
     padding: 20px;
+
 }
 
 .container h1 {
@@ -35,7 +36,8 @@
 
 }
 
-.form .inputArea {
+.form .inputArea,
+.form .areaFile {
     padding: 0 15px;
     background-color: #000;
     color: #FFF;
@@ -49,6 +51,17 @@
     justify-content: center;
     align-items: center;
     color: #fff;
+    cursor: pointer;
+
+}
+
+.form .areaFile input {
+    width: 200px;
+}
+
+.form .areaFile .file {
+    flex: 1;
+    border: 0;
 }
 
 .form .input {
@@ -64,8 +77,15 @@
 
 .inputArea input::placeholder {
     color: #FFF;
+
 }
 
+.inputArea {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 
 .showPassword {
     display: flex;
@@ -144,4 +164,54 @@ input.button {
 
 .loginButton:hover {
     background-color: #b10d0d;
+}
+
+@media (max-width: 767px) {
+    .container h1 {
+        font-size: 22px;
+    }
+
+    .form {
+        width: 100%;
+
+    }
+
+    .form .input,
+    .form .inputArea {
+        font-size: 14px;
+
+    }
+
+    .form .inputArea input {
+        text-align: left;
+    }
+
+    .form .areaFile {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .inputArea input::placeholder {
+        font-size: 12px;
+
+    }
+
+    .form .button,
+    .loginButton {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .check {
+        width: 10px;
+    }
+
+    .checkLabel {
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+    }
+
 }

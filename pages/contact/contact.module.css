@@ -89,7 +89,7 @@
 .form button {
     background-color: #df1010;
     color: #FFF;
-    padding: 20px;
+    padding: 15px;
     border: 0;
     cursor: pointer;
     font-size: 16px;
@@ -119,4 +119,64 @@
     color: #FFF;
     background-color: #b90d0d;
     font-size: 12px;
+}
+
+@media (max-width: 1075px) {
+    .container {
+        padding: 20px;
+    }
+
+    .contactArea {
+        flex-direction: column;
+    }
+
+    .contactForm {
+        margin: 0;
+        margin-top: 20px;
+    }
+
+    .address {
+        width: 100%;
+    }
+
+    .areaName {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 10px;
+    }
+
+    .address {
+        padding: 20px;
+    }
+
+    .contactForm {
+        padding: 10px;
+    }
+
+    .form button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .form input,
+    .form textarea {
+        margin-bottom: 10px;
+        padding: 10px 15px;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .linkLine {
+        padding-top: 10px;
+    }
 }

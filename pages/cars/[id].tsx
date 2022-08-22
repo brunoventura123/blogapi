@@ -1,6 +1,6 @@
 import Image from "next/image"
 import styles from './post.module.css'
-import f1 from '../../public/images/f1.jpg'
+import carred from '../../public/images/carred.jpg'
 import beauty from '../../public/images/beauty.webp'
 import avatar from '../../public/images/avatar.jpg'
 import Link from "next/link"
@@ -20,14 +20,15 @@ import { AuthUser } from "../../types/AuthUser"
 import apiPosts from "../../libs/apiPosts"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useTranslation } from "next-i18next"
-
+import api from '../../libs/apiPosts'
 
 type Props = {
     cars: Post[]
     loggedUser: AuthUser
+    allPosts: Post[]
 }
 
-const PostItem = ({ cars, loggedUser }: Props) => {
+const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
     const { t } = useTranslation()
     const { data: session, status: sessionStatus } = useSession()
     const router = useRouter()
@@ -46,14 +47,16 @@ const PostItem = ({ cars, loggedUser }: Props) => {
         const json = await res.json()
         if (json.status) {
             return setPost(JSON.parse(JSON.stringify(json.post)))
-        } else { alert('Post não encontrado.') }
+        } else {
+            alert('Post não encontrado.')
+        }
 
     }
     const getComments = async () => {
         const { id, page } = router.query
         const res = await axios.get(`/api/comments?page=${page}&postId=${id}}`)
         if (res.data.status) {
-            return setCommentList(JSON.parse(JSON.stringify(res.data.comments)))
+            return setCommentList(res.data.comments)
         }
         setCountCom(countCom + 1)
     }
@@ -64,7 +67,9 @@ const PostItem = ({ cars, loggedUser }: Props) => {
             const newComment = await axios.post(`/api/comments`,
                 { body: menssage, postId: post?.id, userId: session?.user.id })
             setMenssage('')
-            return setCommentList([...commentList, ...newComment.data.newComment])
+            getComments()
+            setShowMore(true)
+            return
 
         }
         return alert('Preencha o campo com seu comentário.')
@@ -93,40 +98,40 @@ const PostItem = ({ cars, loggedUser }: Props) => {
     }, [])
 
     const newDate = post?.createdAt.toString().substring(0, 10).split('-').reverse().join('/') as string
-    const catNew: string = `${post?.category.substring(0, 1).toUpperCase()}${post?.category.substring(1)}` as string
     return (
         <Theme
+            posts={allPosts}
+            t={[t('news'), t('room')]}
             cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-            t={[t('room'), t('news')]}
             footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <Head>
-                <title>{`${t('title')} - ${post?.title}`}</title>
+                <title>{`${t('title')} - ${router.locale === 'pt' ? post?.title : post?.titleen}`}</title>
             </Head>
             <div className={styles.linkLine}>
                 <Link href={`/`}><span>{t('home')} /</span></Link>
                 <Link href="/cars"><span> {t('cars')} /</span></Link>
-                <span className={styles.blackTitle}> {post?.title}</span>
+                <span className={styles.blackTitle}> {router.locale === 'pt' ? post?.title : post?.titleen}</span>
 
             </div>
             <section className={styles.container}>
                 <div className={styles.leftSide}>
                     <div className={styles.notice}>
-                        <Image width={960} height={500} src={f1} alt="" />
+                        <div><Image width={1050} height={500} src={carred} alt="" /></div>
                         <section className={styles.areaPost}>
                             <div className={styles.infos}>
-                                <span
-                                    style={{ fontSize: '16px' }}>
+                                <span>
                                     <Link href={`/cars`}>{t('cars')}</Link>
-                                </span> <div style={{ marginLeft: '10px', fontSize: '16px' }}>
+                                </span>
+                                <div style={{ marginLeft: '10px' }}>
                                     {router.locale === 'en' ? post?.createdAt.toString().substring(0, 10) : newDate}
                                 </div>
                             </div>
-                            <h1>{`${post?.title}`}</h1>
+                            <h1 className={styles.h1}>{`${router.locale === 'pt' ? post?.title : post?.titleen}`}</h1>
                             <div className={styles.principal}>
-                                <div><Image className={styles.img} width={300} height={180} src={f1} alt="" /></div>
-                                {post?.body}
+                                <div className={styles.areaImage}><Image className={styles.img} width={300} height={180} src={carred} alt="" /></div>
+                                {router.locale === 'pt' ? post?.body : post?.bodyen}
                             </div>
 
 
@@ -135,7 +140,7 @@ const PostItem = ({ cars, loggedUser }: Props) => {
                     </div>
                     <div>
                         <div className={styles.comments}>
-                            <h2>{commentList.length} {commentList.length < 2 ? `${t('comment')}` : `${t('comments')}`}</h2>
+                            <h2>{commentList.length} {commentList.length < 2 ? `${t('comment')}` : `${t('comment')}s`}</h2>
 
                             {commentList.map((i, k) => (
                                 <CommentItem
@@ -147,6 +152,7 @@ const PostItem = ({ cars, loggedUser }: Props) => {
                                     avatar={i.User.avatar}
                                     userId={i.userId}
                                     del={t('delete')}
+                                    load={getComments}
                                 />
                             ))}
 
@@ -172,9 +178,11 @@ const PostItem = ({ cars, loggedUser }: Props) => {
                     </div>
                 </div>
                 <div className={styles.infoArea}>
-                    <NewsLetter news={t('newsMail')} />
-                    <div className={styles.infoAreaImage}>
-                        <Image src={beauty} alt="" />
+                    <div className={styles.areaNews}>
+                        <div><NewsLetter news={t('newsMail')} /></div>
+                        <div className={styles.infoAreaImage}>
+                            <Image src={beauty} alt="" />
+                        </div>
                     </div>
                     <div className={styles.morePosts}>
                         <h2>{t('morePosts')}</h2>
@@ -185,7 +193,7 @@ const PostItem = ({ cars, loggedUser }: Props) => {
                                 <div>
                                     <Image src={avatar} width={80} height={80} alt="Avatar" />
                                 </div>
-                                <a className={styles.titlePost} href={`/cars/${i.id.toString()}`}>{i.title}</a>
+                                <a className={styles.titlePost} href={`/cars/${i.id.toString()}`}>{router.locale === 'pt' ? i.title : i.titleen}</a>
                             </div>
 
                         ))}
@@ -205,13 +213,13 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     if (!session) return { redirect: { destination: '/', permanent: true } }*/
 
     const cars = await apiPosts.getPostForCat(1, 9, 'cars')
-
-
+    const allPosts = await apiPosts.getPostForCat(1, 20, undefined)
     return {
         props: {
             //loggedUser: session.user,
             cars: JSON.parse(JSON.stringify(cars)),
-            ... (await serverSideTranslations(context.locale as string, ['common']))
+            allPosts: JSON.parse(JSON.stringify(allPosts)),
+            ... (await serverSideTranslations(context.locale as string, ['common', 'logo']))
         }
     }
 }

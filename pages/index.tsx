@@ -1,9 +1,16 @@
+import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import SliderPosts from '../components/home/slidePosts'
-import { Theme } from '../components/theme'
-import styles from '../styles/Home.module.css'
+import api from '../libs/apiPosts'
+import TitleBar from '../components/titleBar'
+import CardItem from '../components/cardItem'
+
+import woman from '../public/images/woman.jpg'
+import foodIcon from '../public/images/food.jpg'
+import car from '../public/images/carred.jpg'
+import f1 from '../public/images/carsImages/1.jpg'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -11,20 +18,13 @@ import 'swiper/css/navigation'
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { CategoryItem } from '../components/home/categoryItem'
-import TitleBar from '../components/titleBar'
-import CardItem from '../components/cardItem'
 import { NewsLetter } from '../components/newsletter'
-import api from '../libs/apiPosts'
 import { Post } from '../types/posts'
-
-import car1 from '../public/images/carsImages/1.jpg'
-import car2 from '../public/images/carsImages/2.jpg'
-import car3 from '../public/images/carsImages/3.jpg'
-import car4 from '../public/images/carsImages/4.jpg'
-import car5 from '../public/images/carsImages/5.jpg'
+import { Theme } from '../components/theme'
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 type Props = {
   posts: Post[]
@@ -32,21 +32,25 @@ type Props = {
   beauty: Post[]
   food: Post[]
   formula1: Post[]
+  allPosts: Post[]
 }
-const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
-  const carsSlide = [car1, car2, car3, car4, car5]
+const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
+  const photos = [woman, f1, car, foodIcon]
+  const router = useRouter()
   const { t } = useTranslation('common')
+
   return (
     <Theme
+      posts={allPosts}
+      t={[t('news'), t('room')]}
       cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-      t={[t('room'), t('news')]}
       footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
     >
       <div className={styles.container}>
         <Head>
           <title>{t('title')}</title>
           <meta name="description" content="Blog in the Katheriny Ventura" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="shortcut icon" type="image/x-icon" href="..\public\images\iconFive.ico" />
         </Head>
 
         <main className={styles.main}>
@@ -54,7 +58,7 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
             <SliderPosts posts={posts} />
           </div>
           <div className={styles.bannerAreaHome}>
-            {/*<Swiper
+            <Swiper
               slidesPerView={1}
               loop
               modules={[Navigation, Pagination, Autoplay]}
@@ -67,21 +71,21 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
               {posts.map((post, key) => (
                 <SwiperSlide key={key} className={styles.slideHome}>
                   <div className={styles.areaSlide}>
-                    <Image src={carsSlide[key]} width={960} height={500} alt="Avatar" />
+                    <Image src={photos[key]} width={960} height={500} alt="Avatar" />
                     <Link href={`/${post.category}/${post.id}`}>
-                      <p className={styles.infos}>
+                      <div className={styles.infos}>
                         <span
-                          className={styles.span}>{`${(post.category === 'cars' ? 'Carros' : (post.category === 'beauty') ? 'Beleza' : (post.category === 'formula1') ? 'Formula 1' : (post.category === 'food' ? 'Comida' : ''))} `}
-                          - {` ${post.createdAt.toString().substring(0, 10).split('-').reverse().join('/')}`}
+                          className={styles.span}>{`${router.locale === 'pt' ? (post.category === 'cars' ? 'Carros' : (post.category === 'beauty') ? 'Beleza' : (post.category === 'formula1') ? 'Fórmula 1' : (post.category === 'food' ? 'Comida' : '')) : (post.category === 'cars' ? 'Cars' : (post.category === 'beauty') ? 'Beauty' : (post.category === 'formula1') ? 'Formula 1' : (post.category === 'food' ? 'Food' : ''))} `}
+                          | {` ${router.locale === 'pt' ? post.createdAt.toString().substring(0, 10).split('-').reverse().join('/') : post.createdAt.toString().substring(0, 10).split('-').join('/')}`}
                         </span>
-                        <h2 className={styles.title}>{post.title}</h2>
-                      </p>
+                        <h2 className={styles.title}>{router.locale === 'pt' ? post.title : post.titleen}</h2>
+                      </div>
                     </Link>
                   </div>
                 </SwiperSlide>
               ))}
 
-            </Swiper>*/}
+            </Swiper>
 
             <div className={styles.categoriesArea}>
               <div className={styles.title}>
@@ -99,8 +103,8 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
                     key={key}
                     date={post.createdAt.toString()}
                     id={post.id} category={post.category?.toString()}
-                    title={post.title}
-                    image={carsSlide[key].toString()}
+                    title={router.locale === 'pt' ? post?.title : post?.titleen}
+                    image={''}
 
                   />
                 ))}
@@ -117,15 +121,16 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
                       key={key}
                       date={post.createdAt.toString()}
                       id={post.id} category={post.category?.toString()}
-                      title={post.title}
-                      image={carsSlide[key].toString()}
+                      title={router.locale === 'pt' ? post?.title : post?.titleen}
+                      image={''}
                     />
                   ))}
 
                 </div>
               </div>
+
               <div className={styles.areaItem}>
-                <TitleBar title={t('formula1')} slug={formula1[0].category} all={t('all')} />
+                <TitleBar title={t('formula1')} slug={t('formula1')} all={t('all')} />
                 <div className={styles.cards}>
 
                   {formula1.map((post, key) => (
@@ -134,15 +139,15 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
                       date={post.createdAt.toString()}
                       id={post.id}
                       category={post.category?.toString()}
-                      title={post.title}
-                      image={carsSlide[key].toString()}
+                      title={router.locale === 'pt' ? post?.title : post?.titleen}
+                      image={''}
                     />
                   ))}
 
                 </div>
               </div>
               <div className={styles.areaItem}>
-                <TitleBar title={t('food')} slug={food[0].category} all={t('all')} />
+                <TitleBar title={t('food')} slug={t('food')} all={t('all')} />
                 <div className={styles.cards}>
                   {food.map((post, key) => (
                     <CardItem
@@ -150,15 +155,15 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
                       date={post.createdAt.toString()}
                       id={post.id}
                       category={post.category?.toString()}
-                      title={post.title}
-                      image={carsSlide[key].toString()}
+                      title={router.locale === 'pt' ? post?.title : post?.titleen}
+                      image={''}
                     />
                   ))}
 
                 </div>
               </div>
               <div className={styles.areaItem}>
-                <TitleBar title={t('beauty')} slug={beauty[0].category} all={t('all')} />
+                <TitleBar title={t('beauty')} slug={t('beauty')} all={t('all')} />
                 <div className={styles.cards}>
                   {beauty.map((post, key) => (
                     <CardItem
@@ -166,8 +171,8 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
                       date={post.createdAt.toString()}
                       id={post.id}
                       category={post.category?.toString()}
-                      title={post.title}
-                      image={carsSlide[key].toString()}
+                      title={router.locale === 'pt' ? post?.title : post?.titleen}
+                      image={''}
                     />
                   ))}
 
@@ -176,7 +181,7 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
             </div>
             <div className={styles.cardNewsLetter}>
               <div className={styles.areaItem}>
-                <TitleBar title={t('morePosts')} slug={posts[0].category} all={t('all')} />
+                <TitleBar title={t('morePosts')} all={t('all')} />
                 <div className={styles.cardsMore}>
                   {posts.map((post, key) => (
                     <CardItem
@@ -184,8 +189,8 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
                       date={post.createdAt.toString()}
                       id={post.id}
                       category={post.category?.toString()}
-                      title={post.title}
-                      image={carsSlide[key].toString()}
+                      title={router.locale === 'pt' ? post?.title : post?.titleen}
+                      image={''}
                     />
                   ))}
 
@@ -205,15 +210,17 @@ const Home = ({ posts, cars, beauty, food, formula1 }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   // DRY = Dont Repeat Yourself
-  const posts = await api.getPostForCat(1, 4, undefined, locale as string)
-  const cars = await api.getPostForCat(1, 2, 'cars', locale as string)
-  const beauty = await api.getPostForCat(1, 2, 'beauty', locale as string)
-  const food = await api.getPostForCat(1, 2, 'food', locale as string)
-  const formula1 = await api.getPostForCat(1, 2, 'formula1', locale as string)
+  const posts = await api.getPostForCat(1, 4, undefined)
+  const allPosts = await api.getPostForCat(1, 20, undefined)
+  const cars = await api.getPostForCat(1, 2, 'cars')
+  const beauty = await api.getPostForCat(1, 2, 'beauty')
+  const food = await api.getPostForCat(1, 2, 'food')
+  const formula1 = await api.getPostForCat(1, 2, 'formula1')
   const t = await serverSideTranslations(locale as string, ['common'])
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
+      allPosts: JSON.parse(JSON.stringify(allPosts)),
       cars: JSON.parse(JSON.stringify(cars)),
       beauty: JSON.parse(JSON.stringify(beauty)),
       food: JSON.parse(JSON.stringify(food)),

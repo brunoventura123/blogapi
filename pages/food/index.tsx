@@ -15,9 +15,10 @@ import styles from '../cars/styles.module.css'
 
 type Props = {
     food: Post[]
+    posts: Post[]
 }
 
-const Food = ({ food }: Props) => {
+const Food = ({ food, posts }: Props) => {
     const { t } = useTranslation()
     const router = useRouter()
     const [showMore, setShowMore] = useState(true)
@@ -42,20 +43,21 @@ const Food = ({ food }: Props) => {
 
     return (
         <Theme
-            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
-            t={[t('room'), t('news')]}
+            posts={posts}
+            t={[t('news'), t('room')]}
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
             footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <div className={styles.container}>
                 <Head>
-                    <title>{t('title')} | {t('food')}</title>
+                    <title>{t('title')} | {t('food').toUpperCase()}</title>
                 </Head>
                 <div className={styles.areaPosts}>
                     <TitleBar title={t('food')} />
                     <div className={styles.cardsFeutered}>
                         {food.map((post, key) => (
-                            <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={post.title} />
+                            <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={router.locale === 'pt' ? post.title : post.titleen} />
                         ))}
 
                     </div>
@@ -63,11 +65,11 @@ const Food = ({ food }: Props) => {
                         <button className={styles.buttonMore} onClick={handleMorePosts}>{t('loadMore')}</button>
                     }
                     {loading &&
-                        <div>Carregando...</div>
+                        <div style={{ textAlign: 'center', color: '#df1010', fontWeight: 'bold' }}>Carregando...</div>
                     }
                 </div>
                 <div className={styles.news}>
-                    <NewsLetter news={t('news')} />
+                    <NewsLetter news={t('newsMail')} />
                 </div>
             </div>
         </Theme>
@@ -75,12 +77,14 @@ const Food = ({ food }: Props) => {
 }
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     // DRY = Dont Repeat Yourself
-    const food = await api.getPostForCat(1, 8, 'food', locale as string)
+    const food = await api.getPostForCat(1, 8, 'food')
+    const posts = await api.getPostForCat(0, 20, undefined)
     const t = await serverSideTranslations(locale as string, ['common'])
 
     return {
         props: {
             food: JSON.parse(JSON.stringify(food)),
+            posts: JSON.parse(JSON.stringify(posts)),
             ...t
         }
     }

@@ -1,6 +1,6 @@
 import Image from "next/image"
 import styles from '../cars/post.module.css'
-import f1 from '../../public/images/f1.jpg'
+import max from '../../public/images/max.jpg'
 import beauty from '../../public/images/beauty.webp'
 import avatar from '../../public/images/avatar.jpg'
 import Link from "next/link"
@@ -11,25 +11,22 @@ import Head from "next/head"
 import { Theme } from "../../components/theme"
 import { NewsLetter } from "../../components/newsletter"
 import { CommentItem } from "../../components/commentItem"
-import { useEffect, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { Comment } from "../../types/comment"
 import { useRouter } from "next/router"
 import { Post } from "../../types/posts"
 import { GetServerSideProps, GetServerSidePropsContext } from "next"
 import { signIn, useSession } from "next-auth/react"
-import { AuthUser } from "../../types/AuthUser"
 import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import Fomula1 from "."
 
 
 type Props = {
-    comments: Comment[]
     formula1: Post[]
-    loggedUser: AuthUser
+    posts: Post[]
 }
 
-const PostItem = ({ formula1, loggedUser }: Props) => {
+const PostItem = ({ formula1, posts }: Props) => {
     const { t } = useTranslation()
     const { data: session, status: sessionStatus } = useSession()
     const router = useRouter()
@@ -38,14 +35,14 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
     const [loading, setLoading] = useState(false)
     const [pageCount, setPageCount] = useState(1)
     const [commentList, setCommentList] = useState<Comment[]>([])
-    const [postUni, setPostUni] = useState<Post>()
+    const [post, setPost] = useState<Post>()
     const [countCom, setCountCom] = useState(1)
 
     const postUnique = async () => {
         const { id } = router.query
-        const res = await axios.get(`/api/posts/${id}?language=${router.locale as string}`)
+        const res = await axios.get(`/api/posts/${id}`)
         if (res.data.status) {
-            return setPostUni(JSON.parse(JSON.stringify(res.data.post)))
+            return setPost(JSON.parse(JSON.stringify(res.data.post)))
         } else { alert('Post não encontrado.') }
 
     }
@@ -53,15 +50,18 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
         const { id, page } = router.query
         const res = await axios.get(`/api/comments?page=${page}&postId=${id}}`)
         if (res.data.status) {
-            return setCommentList(JSON.parse(JSON.stringify(res.data.comments)))
+            return setCommentList(res.data.comments)
         }
         setCountCom(countCom + 1)
     }
-    const handleNewComment = async () => {
+    const handleNewComment = async (e: FormEvent<HTMLElement>) => {
+        e.preventDefault()
         if (menssage) {
             const newComment = await axios.post(`/api/comments`,
-                { body: menssage, postId: postUni?.id, userId: session?.user.id })
-            return setCommentList([...commentList, ...newComment.data.newComment])
+                { body: menssage, postId: post?.id, userId: session?.user.id })
+            setMenssage('')
+            getComments()
+            return
 
         }
         return alert('Preencha o campo com seu comentário.')
@@ -88,41 +88,39 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
         //getPhotos()
         getComments()
     }, [])
-    const catNew: string = `${postUni?.category.substring(0, 1).toUpperCase()}${postUni?.category.substring(1)}` as string
-    let newDate = postUni?.createdAt.toString().substring(0, 10).split('-').reverse().join('/')
+    let newDate = post?.createdAt.toString().substring(0, 10).split('-').reverse().join('/')
     return (
         <Theme
-            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
-            t={[t('room'), t('news')]}
+            posts={posts}
+            t={[t('news'), t('room')]}
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
             footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
-
         >
             <Head>
-                <title>{`${t('title')} | ${postUni?.title}`}</title>
+                <title>{`${t('title')} | ${router.locale === 'en' ? post?.titleen : post?.title}`}</title>
             </Head>
             <div className={styles.linkLine}>
                 <Link href={`/`}><span>{t('home')} /</span></Link>
                 <Link href="/formula1"><span> {t('formula1')} /</span></Link>
-                <span className={styles.blackTitle}> {postUni?.title}</span>
+                <span className={styles.blackTitle}> {router.locale === 'pt' ? post?.title : post?.titleen}</span>
 
             </div>
             <section className={styles.container}>
                 <div className={styles.leftSide}>
                     <div className={styles.notice}>
-                        <Image width={960} height={500} src={f1} alt="" />
+                        <Image width={960} height={500} src={max} alt="" />
                         <section className={styles.areaPost}>
                             <div className={styles.infos}>
-                                <span
-                                    style={{ fontSize: '16px' }}>
+                                <span>
                                     <Link href={`/formula1`}>{t('formula1')}</Link>
-                                </span> <div style={{ marginLeft: '10px', fontSize: '16px' }}>
-                                    {router.locale === 'en' ? postUni?.createdAt.toString().substring(0, 10) : newDate}
+                                </span> <div style={{ marginLeft: '10px' }}>
+                                    {router.locale === 'en' ? post?.createdAt.toString().substring(0, 10) : newDate}
                                 </div>
                             </div>
-                            <h1>{`${postUni?.title}`}</h1>
+                            <h1 className={styles.h1}>{`${router.locale === 'pt' ? post?.title : post?.titleen}`}</h1>
                             <div className={styles.principal}>
-                                <div><Image className={styles.img} width={300} height={180} src={f1} alt="" /></div>
-                                {postUni?.body}
+                                <div className={styles.areaImage}><Image className={styles.img} width={300} height={180} src={max} alt="" /></div>
+                                {router.locale === 'pt' ? post?.body : post?.bodyen}
                             </div>
 
 
@@ -131,7 +129,7 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
                     </div>
                     <div>
                         <div className={styles.comments}>
-                            <h2>{commentList.length} {commentList.length < 2 ? `${t('comment')}` : `${t('comments')}`}</h2>
+                            <h2>{commentList.length} {commentList.length < 2 ? `${t('comment')}` : `${t('comment')}s`}</h2>
 
                             {commentList.map((i, k) => (
                                 <CommentItem
@@ -143,6 +141,7 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
                                     avatar={i.User.avatar}
                                     userId={i.userId}
                                     del={t('delete')}
+                                    load={getComments}
                                 />
                             ))}
 
@@ -168,9 +167,11 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
                     </div>
                 </div>
                 <div className={styles.infoArea}>
-                    <NewsLetter news={t('newsMail')} />
-                    <div className={styles.infoAreaImage}>
-                        <Image src={beauty} alt="" />
+                    <div className={styles.areaNews}>
+                        <div><NewsLetter news={t('newsMail')} /></div>
+                        <div className={styles.infoAreaImage}>
+                            <Image src={beauty} alt="" />
+                        </div>
                     </div>
                     <div className={styles.morePosts}>
                         <h2>{t('morePosts')}</h2>
@@ -181,7 +182,7 @@ const PostItem = ({ formula1, loggedUser }: Props) => {
                                 <div>
                                     <Image src={avatar} width={80} height={80} alt="Avatar" />
                                 </div>
-                                <a className={styles.titlePost} href={`/cars/${i.id.toString()}`}>{i.title}</a>
+                                <a className={styles.titlePost} href={`/cars/${i.id.toString()}`}>{router.locale === 'pt' ? i.title : i.titleen}</a>
                             </div>
 
                         ))}
@@ -199,14 +200,14 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         context.req, context.res, authOptions
     )
     if (!session) return { redirect: { destination: '/', permanent: true } }*/
-    const { locale } = context
-    const formula1 = await apiPosts.getPostForCat(1, 9, 'formula1', locale as string)
-
+    const formula1 = await apiPosts.getPostForCat(1, 9, 'formula1')
+    const posts = await apiPosts.getPostForCat(1, 20, undefined)
     return {
         props: {
             //loggedUser: session.user,
             formula1: JSON.parse(JSON.stringify(formula1)),
-            ... (await serverSideTranslations(locale as string, ['common']))
+            posts: JSON.parse(JSON.stringify(posts)),
+            ...(await serverSideTranslations(context.locale as string, ['common']))
         }
     }
 }

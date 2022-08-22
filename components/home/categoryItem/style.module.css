@@ -1,9 +1,14 @@
+.container {
+    width: 100%;
+}
+
 .list {
     list-style: none;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
 }
 
 .listItem {
@@ -12,10 +17,11 @@
     color: #FFF;
     background-position: center;
     background-size: cover;
+    width: 100%;
 }
 
 .listItem:nth-child(1) {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../../public/images/car.jpeg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../../public/images/carred.jpg');
 }
 
 .listItem:nth-child(2) {
@@ -23,7 +29,7 @@
 }
 
 .listItem:nth-child(3) {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../../public/images/food.webp');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../../public/images/foodcat.jpg');
 }
 
 .listItem:nth-child(4) {

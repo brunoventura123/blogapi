@@ -15,9 +15,10 @@ import styles from './styles.module.css'
 
 type Props = {
     cars: Post[]
+    posts: Post[]
 }
 
-const Cars = ({ cars }: Props) => {
+const Cars = ({ cars, posts }: Props) => {
     const { t } = useTranslation()
     const router = useRouter()
     const [showMore, setShowMore] = useState(true)
@@ -28,7 +29,6 @@ const Cars = ({ cars }: Props) => {
     const handleMorePosts = async () => {
         setLoading(true)
         const json = await axios.get(`/api/posts?page=${pageCount + 1}&qt=3&cat=cars`)
-        console.log(json.data.posts)
         if (json.status) {
             if (json.data.postForCat.length === 0) {
                 setShowMore(false)
@@ -42,19 +42,20 @@ const Cars = ({ cars }: Props) => {
 
     return (
         <Theme
-            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('search')]}
-            t={[t('room'), t('news')]}
+            posts={posts}
+            t={[t('news'), t('room')]}
+            cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
             footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
         >
             <div className={styles.container}>
                 <Head>
-                    <title>{t('title')} | {t('cars')}</title>
+                    <title>{t('title')} | {t('cars').toUpperCase()}</title>
                 </Head>
                 <div className={styles.areaPosts}>
                     <TitleBar title={t('cars')} />
                     <div className={styles.cardsFeutered}>
                         {postList.map((post, key) => (
-                            <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={post.title} />
+                            <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={router.locale === 'pt' ? post.title : post.titleen} />
                         ))}
 
                     </div>
@@ -62,7 +63,7 @@ const Cars = ({ cars }: Props) => {
                         <button className={styles.buttonMore} onClick={handleMorePosts}>{t('loadMore')}</button>
                     }
                     {loading &&
-                        <div>Carregando...</div>
+                        <div style={{ textAlign: 'center', color: '#df1010', fontWeight: 'bold' }}>Carregando...</div>
                     }
                 </div>
                 <div className={styles.news}>
@@ -74,11 +75,13 @@ const Cars = ({ cars }: Props) => {
 }
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     // DRY = Dont Repeat Yourself
-    const cars = await api.getPostForCat(1, 8, 'cars', locale as string)
+    const cars = await api.getPostForCat(1, 8, 'cars')
+    const posts = await api.getPostForCat(0, 20, undefined)
     const t = await serverSideTranslations(locale as string, ['common'])
     return {
         props: {
             cars: JSON.parse(JSON.stringify(cars)),
+            posts: JSON.parse(JSON.stringify(posts)),
             ...t
         }
     }

@@ -34,10 +34,11 @@ model Comment {
 model Post {
   id        Int       @id @default(autoincrement())
   title     String
+  titleen   String
   body      String    @db.VarChar(2000)
+  bodyen    String    @db.VarChar(2000)
   createdAt DateTime  @default(now())
   category  String
-  language  String
   comment   Comment[]
   photos    Photo[]
 

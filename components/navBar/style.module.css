@@ -7,28 +7,48 @@
     background-color: #FFF;
     box-shadow: 0 4px 2px -2px gray;
     margin-top: -1px;
+    position: relative;
 }
 
 .container nav {
-    height: 100%;
+    position: relative;
+}
+
+.menuIcon {
+    display: none;
+    width: fit-content;
 }
 
 .contLink {
     display: flex;
     list-style: none;
     padding: 0;
-    height: 100%;
+    height: auto;
+    position: relative;
+    transition: all ease .5s;
 }
-
-
 
 .linkItem {
     padding: 15px 0px;
-    height: 100%;
+    height: 50px;
     transition: all ease .3s;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.linkItem:nth-child(1) {
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.linkItem:hover .linkItem:nth-child(1) {
+    color: #fff;
 }
 
 .linkItem:hover {
@@ -43,11 +63,9 @@
     padding: 15px 15px;
 }
 
-
 .linkItem a:hover {
     color: #fff;
 }
-
 
 .linkActive {
     color: #FFF;
@@ -58,10 +76,13 @@
     color: #FFF;
 }
 
+
 .areaLoginSearch {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    flex-direction: row;
 }
 
 .areaLoginSearch a {
@@ -72,7 +93,7 @@
 }
 
 .input {
-    width: 300px;
+    width: 350px;
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -132,4 +153,149 @@
 
 .locale a:hover {
     color: #df1010;
+}
+
+.list {
+    position: absolute;
+    z-index: 10;
+    list-style: none;
+    background-color: #fff;
+    box-shadow: 0 0 5px #000;
+    overflow: hidden;
+}
+
+.li {
+    padding: 10px;
+    background-color: #fff;
+}
+
+.li:hover {
+    background-color: #ddd;
+}
+
+.li a {
+    color: #333;
+    font-weight: normal;
+    text-align: left;
+}
+
+.hello {
+    padding-left: 20px;
+    display: flex;
+}
+
+.areaUser {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 1075px) {
+    .container {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+    }
+
+    .areaLoginSearch {
+        display: flex;
+        padding: 10px 0;
+        width: 100%;
+    }
+
+    .areaInput {
+        flex: 1;
+        display: flex;
+    }
+
+    .input {
+        width: 100%;
+    }
+
+    .input input {
+        width: 100%;
+    }
+
+    .linkItem {
+        height: 40px;
+        align-items: center;
+    }
+
+    .list {
+        top: 50px;
+    }
+
+    .areaUser {
+        display: flex;
+        justify-content: space-between;
+
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 20px;
+
+    }
+
+    .hello {
+        padding: 0;
+    }
+
+    .list {
+        width: 100%;
+
+    }
+
+    .menuIcon {
+        display: block;
+    }
+
+    .nav,
+    .contLink {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .areaLoginSearch {
+        flex-direction: column;
+        justify-content: center;
+        border-top: 1px solid #333;
+        width: 100%;
+        padding-bottom: 0;
+    }
+
+    .areaInput {
+        width: 100%;
+    }
+
+    .linkItem {
+        width: 100%;
+        padding: 0;
+        justify-content: flex-start;
+    }
+
+    .linkItem a {
+        padding: 10px 5px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .linkItem:nth-child(1) a {
+        width: 100%;
+        padding: 5px 5px;
+    }
+
+    .areaUser {
+        display: flex;
+        width: 100%;
+        margin-top: 20px;
+        justify-content: space-between;
+        font-size: 14px;
+    }
+
+    .language {
+        font-size: 14px;
+    }
+
 }

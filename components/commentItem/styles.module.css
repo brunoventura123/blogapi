@@ -21,7 +21,6 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-
 }
 
 .areaInfo .areaData {
@@ -48,7 +47,7 @@
 
 }
 
-.areaInfo button {
+.button {
     font-size: 11px;
     margin-top: 20px;
     padding: 5px 10px;
@@ -63,7 +62,7 @@
     align-items: flex-end;
 }
 
-.areaInfo button a {
+.button a {
     text-decoration: none;
     color: #777;
     transition: all ease .2s;
@@ -71,6 +70,25 @@
     height: 100%;
 }
 
-.areaInfo button:hover {
+.button:hover {
     color: #333;
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 10px;
+    }
+
+    .areaInfo .text {
+        font-size: 14px;
+    }
+
+    .areaInfo .areaData {
+        padding: 0;
+    }
+
+    .button {
+        padding: 0px;
+        font-size: 8px;
+    }
 }

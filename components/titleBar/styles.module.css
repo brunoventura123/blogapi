@@ -26,3 +26,15 @@
     color: #444;
     text-decoration: underline;
 }
+
+@media (max-width:767px) {
+
+
+    .container .title h2 {
+        font-size: 20px;
+    }
+
+    .container .title a {
+        font: 16px;
+    }
+}
