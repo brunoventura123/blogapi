@@ -61,6 +61,7 @@ const PostItem = ({ formula1, posts }: Props) => {
                 { body: menssage, postId: post?.id, userId: session?.user.id })
             setMenssage('')
             getComments()
+            setShowMore(true)
             return
 
         }

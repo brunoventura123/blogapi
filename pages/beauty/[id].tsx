@@ -65,6 +65,7 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
                 { body: menssage, postId: postUni?.id, userId: session?.user.id })
             setMenssage('')
             getComments()
+            setShowMore(true)
             return
 
         }
