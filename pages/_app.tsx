@@ -5,7 +5,7 @@ import { appWithTranslation } from 'next-i18next'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} >
       <Component {...pageProps} />
     </SessionProvider>
   )
