@@ -1,22 +1,19 @@
 import styles from './styles.module.css'
 import w from '../../public/images/w.jpg'
-import car from '../../public/images/car.jpeg'
-import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { createClient } from 'pexels';
+import Image from 'next/image'
 
 type Props = {
     id: number
-    image?: string
+    url: string
+    token: string
     category: string
     title: string
     date: string
 }
 
-const CardItem = ({ id, image, category, title, date }: Props) => {
+const CardItem = ({ id, url, category, title, date, token }: Props) => {
     const router = useRouter()
     let newDate = date.substring(0, 10).split('-').reverse().join('/') as string
     const catNew = `${category.substring(0, 1).toUpperCase()}${category.substring(1)}` as string
@@ -27,7 +24,7 @@ const CardItem = ({ id, image, category, title, date }: Props) => {
             <Link href={`/${category}/${id}`}>
                 <div className={styles.card} >
                     <div className={styles.image}>
-                        <Image src={w} alt="" />
+                        <Image height={150} width={300} src={`${url}${token}`} alt={title} layout="fill" />
                     </div>
 
                     <div className={styles.areaInfos}>
@@ -36,7 +33,7 @@ const CardItem = ({ id, image, category, title, date }: Props) => {
                         </div>
 
                         <div className={styles.title}>
-                            <h2>{title.length > 90 ? title.substring(0, 70) + '...' : title}</h2>
+                            <h2>{title.length > 70 ? title.substring(0, 70) + '...' : title}</h2>
                         </div>
 
                     </div>

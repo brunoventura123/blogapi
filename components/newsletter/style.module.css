@@ -1,5 +1,5 @@
 .container {
-    max-width: 370px;
+    width: 370px;
     position: relative;
 }
 
@@ -65,13 +65,16 @@ p.text {
     opacity: .9;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1075px) {
 
     .container,
-    .box {
+    .box,
+    .form {
         width: 100%;
-
     }
+}
+
+@media (max-width: 767px) {
 
     .container h2 {
         font-size: 20px;
@@ -92,11 +95,10 @@ p.text {
     .input1::placeholder,
     .input .input2 {
         font-size: 14px;
-
     }
 
     .input .input2,
-    .input1 {
+    .input .input1 {
         font-size: 12px;
         padding: 10px;
     }

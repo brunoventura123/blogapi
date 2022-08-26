@@ -16,6 +16,17 @@ export default {
     getUnique: async (id: number, page: number, cat: string) => {
         const post = await prisma.post.findFirst({
             where: { id },
+            select: {
+                id: true,
+                title: true,
+                titleen: true,
+                body: true,
+                bodyen: true,
+                category: true,
+                comment: true,
+                createdAt: true,
+                photos: true
+            }
 
         })
         return post
@@ -30,6 +41,17 @@ export default {
         if (page) { skip = (page - 1) * take }
         const posts = await prisma.post.findMany({
             skip, take, where: { category: cat },
+            select: {
+                id: true,
+                title: true,
+                titleen: true,
+                body: true,
+                bodyen: true,
+                category: true,
+                createdAt: true,
+                comment: true,
+                photos: true,
+            },
             orderBy: {
                 id: 'desc'
             }

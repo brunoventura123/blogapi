@@ -1,9 +1,8 @@
-.container {}
-
 .card {
     box-shadow: 0 0 3px #444;
     transition: all ease .3s;
     cursor: pointer;
+    position: relative;
 }
 
 .card:hover {
@@ -13,7 +12,10 @@
 
 .image {
     background-color: #FFF;
+    position: relative;
+    height: 150px;
 }
+
 
 .areaInfos {
     padding: 20px;
@@ -61,4 +63,11 @@
 .title h2:hover {
     color: #df1010;
     text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+    .card:hover {
+        box-shadow: 0 0 8px #444;
+        transform: scale(1);
+    }
 }

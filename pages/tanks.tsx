@@ -28,13 +28,13 @@ const Tanks = () => {
             height: '100vh',
             backgroundColor: '#333',
             color: '#FFF',
-            paddingTop: '20px'
+            paddingTop: '20px',
         }}>
             <Head>
                 <title>{t('title')} | {t('tanks')}</title>
             </Head>
             <Image src={dance} alt="" />
-            <h1>{t('success')}</h1>
+            <h1 style={{ fontSize: '22px' }}>{t('success')}</h1>
             <div style={{ marginTop: '20px', fontSize: '20px', color: 'pink' }}>
                 <Link href={'/'}><a style={{ color: '#df1010', textDecoration: 'none', }}>{t('comeback')}</a></Link>
             </div>

@@ -15,30 +15,41 @@ type Props = {
 }
 
 export const NavBar = ({ cat, postss }: Props) => {
-    const logged = true
-    const { data: session } = useSession()
-    const router = useRouter()
     const [search, setSearch] = useState('')
     const [focus, setFocus] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+
+    const router = useRouter()
     const lower = search.toLowerCase()
-    const [show, setShow] = useState(false)
+    const { data: session } = useSession()
 
     return (
         <div className={styles.container}>
 
             <nav className={styles.nav}>
-                <div onClick={() => setShow(!show)} className={styles.menuIcon}>
+                <div onClick={() => setIsOpen(!isOpen)} className={styles.menuIcon}>
                     <MenuIcon />
                 </div>
-                <ul className={styles.contLink} style={{ display: show ? 'flex' : 'flex' }}>
-                    <li className={[styles.linkItem, navigationLinks[0].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[0].path[0]}><a><HomeIcon fontSize="small" /></a></Link></li>
-                    <li className={[styles.linkItem, navigationLinks[1].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[1].path[0]}><a>{cat[0]}</a></Link></li>
-                    <li className={[styles.linkItem, navigationLinks[2].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[2].path[0]}><a>{cat[1]}</a></Link></li>
-                    <li className={[styles.linkItem, navigationLinks[3].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[3].path[0]}><a>{cat[3]}</a></Link></li>
-                    <li className={[styles.linkItem, navigationLinks[4].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[4].path[0]}><a>{cat[2]}</a></Link></li>
-                    <li className={[styles.linkItem, navigationLinks[5].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[5].path[0]}><a>{cat[4]}</a></Link></li>
-                </ul>
-
+                <div className={styles.areaMenu}>
+                    <ul className={styles.contLink} >
+                        <li className={[styles.linkItem, navigationLinks[0].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[0].path[0]}><a><HomeIcon fontSize="small" /></a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[1].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[1].path[0]}><a>{cat[0]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[2].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[2].path[0]}><a>{cat[1]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[3].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[3].path[0]}><a>{cat[3]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[4].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[4].path[0]}><a>{cat[2]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[5].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[5].path[0]}><a>{cat[4]}</a></Link></li>
+                    </ul>
+                </div>
+                <div className={styles.areaMenu2}>
+                    <ul className={styles.contLink} style={{ display: isOpen ? 'flex' : 'none' }}>
+                        <li className={[styles.linkItem, navigationLinks[0].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[0].path[0]}><a><HomeIcon fontSize="small" /></a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[1].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[1].path[0]}><a>{cat[0]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[2].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[2].path[0]}><a>{cat[1]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[3].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[3].path[0]}><a>{cat[3]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[4].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[4].path[0]}><a>{cat[2]}</a></Link></li>
+                        <li className={[styles.linkItem, navigationLinks[5].path.includes(router.pathname) ? styles.linkActive : null].join(' ')}><Link href={navigationLinks[5].path[0]}><a>{cat[4]}</a></Link></li>
+                    </ul>
+                </div>
             </nav>
             <div className={styles.areaLoginSearch}>
                 <div className={styles.areaInput}>
@@ -49,7 +60,7 @@ export const NavBar = ({ cat, postss }: Props) => {
                             value={search}
                             onChange={e => setSearch(e.target.value)}
                             onFocus={() => setFocus(true)}
-                            onBlur={() => { }}
+                            onBlur={() => { setTimeout(() => { setSearch('') }, 500) }}
                         />
                         <div className={styles.icon}>
                             <SearchIcon />
@@ -58,19 +69,19 @@ export const NavBar = ({ cat, postss }: Props) => {
                     {focus &&
                         <ul className={styles.list} style={{ display: (search.length > 2 ? 'block' : 'none') }}>
                             {postss?.map((p, k) => (
-                                <>
+                                <li key={k}>
                                     {router.locale === 'pt' && search.length > 2 && p.title.toLowerCase().includes(lower) && router.asPath != `/${p.category}/${p.id}` &&
-                                        <li className={styles.li} key={k}>
+                                        <div className={styles.li}>
                                             <Link href={`/${p.category}/${p.id}`}>{p.title.toLowerCase().includes(lower) ? p.title : ''}</Link>
-                                        </li>
+                                        </div>
                                     }
                                     {router.locale === 'en' && search.length > 2 && p.titleen.toLowerCase().includes(lower) && router.asPath != `/${p.category}/${p.id}` &&
-                                        <li className={styles.li} key={k}>
+                                        <div className={styles.li}>
                                             <Link href={`/${p.category}/${p.id}`}>{p.titleen.toLowerCase().includes(lower) ? p.titleen : ''}</Link>
-                                        </li>
+                                        </div>
                                     }
 
-                                </>
+                                </li>
                             ))}
                         </ul>
                     }
@@ -98,7 +109,7 @@ export const NavBar = ({ cat, postss }: Props) => {
                 </div>
             </div>
 
-        </div>
+        </div >
     )
 }
 

@@ -20,7 +20,6 @@ import { AuthUser } from "../../types/AuthUser"
 import apiPosts from "../../libs/apiPosts"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useTranslation } from "next-i18next"
-import api from '../../libs/apiPosts'
 
 type Props = {
     cars: Post[]
@@ -43,10 +42,10 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
 
     const postUnique = async () => {
         const { id } = router.query
-        const res = await fetch(`/api/posts/${id}`)
-        const json = await res.json()
-        if (json.status) {
-            return setPost(JSON.parse(JSON.stringify(json.post)))
+        const res = await axios.get(`/api/posts/${id}`)
+
+        if (res.data.status) {
+            return setPost(JSON.parse(JSON.stringify(res.data.post)))
         } else {
             alert('Post não encontrado.')
         }
@@ -96,7 +95,7 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
         postUnique()
         getComments()
     }, [])
-
+    console.log(post?.photos[0].url)
     const newDate = post?.createdAt.toString().substring(0, 10).split('-').reverse().join('/') as string
     return (
         <Theme
@@ -118,7 +117,7 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
             <section className={styles.container}>
                 <div className={styles.leftSide}>
                     <div className={styles.notice}>
-                        <div><Image width={1050} height={500} src={carred} alt="" /></div>
+                        <div><img className={styles.noticeImg} src={`${post?.photos[0].url}${post?.photos[0].token}`} alt="" /></div>
                         <section className={styles.areaPost}>
                             <div className={styles.infos}>
                                 <span>
@@ -130,7 +129,7 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
                             </div>
                             <h1 className={styles.h1}>{`${router.locale === 'pt' ? post?.title : post?.titleen}`}</h1>
                             <div className={styles.principal}>
-                                <div className={styles.areaImage}><Image className={styles.img} width={300} height={180} src={carred} alt="" /></div>
+                                <div className={styles.areaImage}><img className={styles.img} src={`${post?.photos[0].url}${post?.photos[0].token}`} alt="" /></div>
                                 {router.locale === 'pt' ? post?.body : post?.bodyen}
                             </div>
 
@@ -193,7 +192,7 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
                                 <div>
                                     <Image src={avatar} width={80} height={80} alt="Avatar" />
                                 </div>
-                                <a className={styles.titlePost} href={`/cars/${i.id.toString()}`}>{router.locale === 'pt' ? i.title : i.titleen}</a>
+                                <a href={`/cars/${i.id}`} className={styles.titlePost}>{router.locale === 'pt' ? i.title : i.titleen}</a>
                             </div>
 
                         ))}

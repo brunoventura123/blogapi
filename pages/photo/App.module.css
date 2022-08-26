@@ -1,0 +1,56 @@
+.container {
+    background-color: #27282f;
+    color: #FFF;
+    min-height: 100vh;
+}
+
+.area {
+    margin: auto;
+    max-width: 980px;
+    padding: 30px 0;
+}
+
+.header {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.screenWarning {
+    text-align: center;
+}
+
+
+.screenWarning .emoji {
+    margin-bottom: 20px;
+    font-size: 50px;
+}
+
+.photoList {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.uploadForm {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+
+.uploadForm input[type="submit"] {
+    background-color: #756DF4;
+    color: #FFF;
+    border: 0;
+    padding: 8px 16px;
+    border-radius: 10px;
+    margin: 0 20px;
+    cursor: pointer;
+
+
+}
+
+.uploadForm input[type="submit"]:hover {
+    opacity: .9;
+}

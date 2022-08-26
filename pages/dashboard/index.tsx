@@ -4,6 +4,9 @@ import { FormEvent, useState } from "react"
 import { Input } from "../../components/dashboard/input"
 import { Theme } from "../../components/dashTheme/theme"
 import styles from './styles.module.css'
+import { PhotoApi } from '../../services/PhotoApi'
+import * as Photos from '../../services/photos';
+
 
 const Dashboard = () => {
     const { t } = useTranslation()
@@ -12,22 +15,55 @@ const Dashboard = () => {
     const [category, setCategory] = useState('')
     const [text, setText] = useState('')
     const [textEn, setTextEn] = useState('')
-    const [files, setFiles] = useState('')
+    const [files, setFiles] = useState<File>()
+    const [photos, setPhotos] = useState('');
+    const [uploading, setUploading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
+    const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true)
+        const formData = new FormData(e.currentTarget);
+        const file = formData.get('image') as File;
+
+        if (file && file.size > 0) {
+            setUploading(true);
+            let result = await Photos.insert(file);
+            setUploading(false);
+
+            if (result instanceof Error) {
+                alert(`${result.name} - ${result.message}`);
+            } else {
+                //let newPhotoList = [photos];
+                //newPhotoList.push(result.url);
+                setLoading(false)
+                return setPhotos(result.url);
+            }
+        }
+
+    }
     const handlePost = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const avatar = `https://logodownload.org/wp-content/uploads/2014/09/google-logo-0.png`
         if (title && titleEn && category && text && textEn) {
             const post = await axios.post(`/api/posts`, {
-                title, titleen: titleEn, body: text, bodyen: textEn, category, avatar
+                title, titleen: titleEn, body: text, bodyen: textEn, category
             })
 
-            if (post.status) {
+            if (post.data.status) {
                 alert('Post salvo com sucesso!')
                 setTitle('')
+                setTitleEn('')
                 setCategory('')
                 setText('')
-                return
+                setTextEn('')
+                let token = photos.slice(-43)
+                let url = photos.slice(0, -43)
+                console.log('Url completa: ' + photos)
+                console.log('Token: ' + token, 'Url: ' + url)
+                const photoPost = await axios.post(`/api/photos`, {
+                    url, token, postId: post.data.newPost.id
+                })
+                return photoPost
             }
         }
         return alert('Digite todos os campos')
@@ -35,8 +71,17 @@ const Dashboard = () => {
 
     return (
         <Theme title="Criar novo post">
+            <form action="" method="POST" style={{ marginBottom: '20px' }} onSubmit={handleFormSubmit}>
+                <label htmlFor="file" className={styles.label}>
+                    Escolha suas imagens <div style={{ fontSize: '11px', marginLeft: '5px' }}> (Apenas arquivos png, jpg e jpeg.)</div>
 
-            <form action="" className={styles.formPost} onSubmit={handlePost}>
+                    <input type="file" name="image" />
+
+                </label>
+                <input type="submit" value="Enviar" />
+            </form>
+            {loading && <div style={{ color: 'red', textAlign: 'center' }}>Carregando...</div>}
+            <form action="" method="POST" className={styles.formPost} onSubmit={handlePost}>
                 <label htmlFor="">
                     <Input
                         type="text"
@@ -78,20 +123,10 @@ const Dashboard = () => {
                         onChange={e => setTextEn(e.target.value)}
                     ></textarea>
                 </label>
-                <label htmlFor="file" className={styles.label}>
-                    Escolha suas imagens <div style={{ fontSize: '11px', marginLeft: '5px' }}> (Apenas arquivos png, jpg e jpeg.)</div>
-                    <div>
-                        <Input
-                            multiple
-                            type="file"
-                            label="Imagens"
-                            name={'file'}
-                            onChange={setFiles}
-                        />
-                    </div>
-                </label>
+
                 <button>Postar</button>
             </form>
+
         </Theme>
     )
 }

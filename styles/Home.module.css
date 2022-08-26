@@ -141,8 +141,14 @@
 }
 
 @media (max-width: 1075px) {
+
     .bannerAreaHome {
         flex-direction: column;
+        padding: 0 20px 0 50px;
+    }
+
+    .newsLetter {
+        width: 100%;
     }
 
     .areaSlide {
@@ -157,7 +163,7 @@
 
     .categoriesArea {
         width: 100%;
-        padding: 50px 50px 50px 0;
+        padding: 50px 30px 50px 0;
     }
 
     .boxArea {
@@ -166,7 +172,7 @@
 
     .cardsFeutered,
     .cardsMore {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .cardNewsLetter {
@@ -179,7 +185,7 @@
     .cards,
     .cardsFeutered,
     .cardsMore {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
     .newsLetter {
@@ -224,10 +230,6 @@
         font-size: 22px;
     }
 
-    .section {
-        padding: 0 10px;
-    }
-
     .newsLetter {
         padding: 0;
         margin: 20px 0;
@@ -254,5 +256,18 @@
 
     h2.title {
         padding: 0;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .cards,
+    .cardsFeutered,
+    .cardsMore {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 20px;
     }
 }

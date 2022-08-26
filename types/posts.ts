@@ -1,3 +1,5 @@
+import { Photo } from "./photo"
+
 export type Post = {
     id: number
     title: string
@@ -13,8 +15,5 @@ export type Post = {
         postId: number
 
     }
-    photo: {
-        id: number
-        url: string
-    }
+    photos: Photo[]
 }

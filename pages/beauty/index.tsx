@@ -58,7 +58,15 @@ const Beauty = ({ beauty, posts }: Props) => {
                     <TitleBar title={t('beauty')} />
                     <div className={styles.cardsFeutered}>
                         {postList.map((post, key) => (
-                            <CardItem date={post.createdAt.toString()} key={key} id={post.id} category={post.category?.toString()} title={router.locale === 'pt' ? post.title : post.titleen} />
+                            <CardItem
+                                date={post.createdAt.toString()}
+                                key={key}
+                                id={post.id}
+                                category={post.category?.toString()}
+                                title={router.locale === 'pt' ? post.title : post.titleen}
+                                url={post.photos[0].url}
+                                token={post.photos[0].token}
+                            />
                         ))}
 
                     </div>

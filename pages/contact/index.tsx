@@ -26,17 +26,26 @@ const Contact = ({ posts }: Props) => {
     const [subject, setSubject] = useState('')
     const [menssage, setMenssage] = useState('')
     const [error, setError] = useState('')
+    const [sure, setSure] = useState('')
 
     const handleContactForm = async (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
         setError('')
+        setSure('')
         if (name && email && subject && menssage) {
             const res = await axios.post(`/api/contact`, {
                 name, email, subject, menssage
             })
             if (res.data.status) {
-                alert('Formulário enviado com sucesso!')
-                router.push('/')
+                setSure('Formulário enviado com sucesso!')
+                setName('')
+                setEmail('')
+                setSubject('')
+                setMenssage('')
+
+                setTimeout(() => {
+                    router.push('/')
+                }, 1000)
             }
 
         } else {
@@ -91,6 +100,9 @@ const Contact = ({ posts }: Props) => {
                     <div className={styles.contactForm}>
                         {error &&
                             <p className={styles.error}>{error}</p>
+                        }
+                        {sure &&
+                            <p className={styles.sure}>{sure}</p>
                         }
                         <form className={styles.form} action="" onSubmit={handleContactForm}>
                             <p className={styles.areaName}>

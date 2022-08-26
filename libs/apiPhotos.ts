@@ -11,14 +11,14 @@ export default {
 
         const photos = await prisma.photo.findMany({
             where: {
-                postId: 2
+                postId
             }
         })
         return photos
     },
-    postPhoto: async (url: string, postId: number) => {
+    postPhoto: async (url: string, token: string, postId: number) => {
         const newPhoto = await prisma.photo.create({
-            data: { url, postId }
+            data: { url, token, postId }
         })
         return newPhoto
     },

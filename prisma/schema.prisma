@@ -48,6 +48,7 @@ model Post {
 model Photo {
   id     Int    @id @default(autoincrement())
   url    String
+  token  String
   postId Int
   Post   Post   @relation(fields: [postId], references: [id])
 

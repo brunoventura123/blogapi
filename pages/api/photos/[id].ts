@@ -4,7 +4,7 @@ import prisma from '../../../libs/prisma'
 
 const handlerGet: NextApiHandler = async (req, res) => {
     const { postId } = req.query
-    const photos = await apiPhotos.getPhotos(parseInt(postId as string))
+    const photos = await apiPhotos.getPhotos((parseInt(postId as string)))
     res.json({ status: true, photos })
 }
 const handlerPut: NextApiHandler = async (req, res) => {

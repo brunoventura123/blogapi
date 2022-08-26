@@ -116,7 +116,7 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
             <section className={styles.container}>
                 <div className={styles.leftSide}>
                     <div className={styles.notice}>
-                        <Image width={960} height={500} src={man} alt="" />
+                        <img className={styles.noticeImg} src={`${postUni?.photos[0].url}${postUni?.photos[0].token}`} alt="" />
                         <section className={styles.areaPost}>
                             <div className={styles.infos}>
                                 <span>
@@ -128,7 +128,7 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
                             </div>
                             <h1 className={styles.h1}>{`${router.locale === 'pt' ? postUni?.title : postUni?.titleen}`}</h1>
                             <div className={styles.principal}>
-                                <div className={styles.areaImage}><Image className={styles.img} width={300} height={180} src={man} alt="" /></div>
+                                <div className={styles.areaImage}><img className={styles.img} src={`${postUni?.photos[0].url}${postUni?.photos[0].token}`} alt="" /></div>
                                 {router.locale === 'pt' ? postUni?.body : postUni?.bodyen}
                             </div>
 
@@ -191,7 +191,7 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
                                 <div>
                                     <Image src={avatar} width={80} height={80} alt="Avatar" />
                                 </div>
-                                <a className={styles.titlePost} href={`/cars/${i.id.toString()}`}>{router.locale === 'pt' ? i.title : i.titleen}</a>
+                                <a href={`/beauty/${i.id}`} className={styles.titlePost}>{router.locale === 'pt' ? i.title : i.titleen}</a>
                             </div>
 
                         ))}

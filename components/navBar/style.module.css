@@ -19,6 +19,14 @@
     width: fit-content;
 }
 
+.areaMenu {
+    display: flex;
+}
+
+.areaMenu2 {
+    display: none;
+}
+
 .contLink {
     display: flex;
     list-style: none;
@@ -239,6 +247,7 @@
 
     .hello {
         padding: 0;
+
     }
 
     .list {
@@ -248,6 +257,14 @@
 
     .menuIcon {
         display: block;
+    }
+
+    .areaMenu {
+        display: none;
+    }
+
+    .areaMenu2 {
+        display: flex;
     }
 
     .nav,

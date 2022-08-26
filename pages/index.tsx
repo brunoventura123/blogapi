@@ -25,6 +25,7 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import apiPhotos from '../libs/apiPhotos'
 
 type Props = {
   posts: Post[]
@@ -38,6 +39,7 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
   const photos = [woman, f1, car, foodIcon]
   const router = useRouter()
   const { t } = useTranslation('common')
+  console.log(cars)
 
   return (
     <Theme
@@ -71,7 +73,7 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
               {posts.map((post, key) => (
                 <SwiperSlide key={key} className={styles.slideHome}>
                   <div className={styles.areaSlide}>
-                    <Image src={photos[key]} width={960} height={500} alt="Avatar" />
+                    <Image src={`${post.photos[0].url}${post.photos[0].token}`} width={1000} height={500} alt="Avatar" />
                     <Link href={`/${post.category}/${post.id}`}>
                       <div className={styles.infos}>
                         <span
@@ -104,8 +106,8 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
                     date={post.createdAt.toString()}
                     id={post.id} category={post.category?.toString()}
                     title={router.locale === 'pt' ? post?.title : post?.titleen}
-                    image={''}
-
+                    url={post.photos[0].url}
+                    token={post.photos[0].token}
                   />
                 ))}
 
@@ -122,7 +124,8 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
                       date={post.createdAt.toString()}
                       id={post.id} category={post.category?.toString()}
                       title={router.locale === 'pt' ? post?.title : post?.titleen}
-                      image={''}
+                      url={post.photos[0].url}
+                      token={post.photos[0].token}
                     />
                   ))}
 
@@ -140,7 +143,8 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
                       id={post.id}
                       category={post.category?.toString()}
                       title={router.locale === 'pt' ? post?.title : post?.titleen}
-                      image={''}
+                      url={post.photos[0].url}
+                      token={post.photos[0].token}
                     />
                   ))}
 
@@ -156,7 +160,8 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
                       id={post.id}
                       category={post.category?.toString()}
                       title={router.locale === 'pt' ? post?.title : post?.titleen}
-                      image={''}
+                      url={post.photos[0].url}
+                      token={post.photos[0].token}
                     />
                   ))}
 
@@ -172,7 +177,8 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
                       id={post.id}
                       category={post.category?.toString()}
                       title={router.locale === 'pt' ? post?.title : post?.titleen}
-                      image={''}
+                      url={post.photos[0].url}
+                      token={post.photos[0].token}
                     />
                   ))}
 
@@ -190,7 +196,8 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
                       id={post.id}
                       category={post.category?.toString()}
                       title={router.locale === 'pt' ? post?.title : post?.titleen}
-                      image={''}
+                      url={post.photos[0].url}
+                      token={post.photos[0].token}
                     />
                   ))}
 
@@ -217,6 +224,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const food = await api.getPostForCat(1, 2, 'food')
   const formula1 = await api.getPostForCat(1, 2, 'formula1')
   const t = await serverSideTranslations(locale as string, ['common'])
+
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),

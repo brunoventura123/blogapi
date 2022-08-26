@@ -30,17 +30,33 @@
 .container .notice {
     flex: 1;
     background-color: #FFF;
+    position: relative;
 }
 
+.container .notice div {
+    position: relative;
+}
 
 .container .notice .float {
     display: inline-block;
     vertical-align: top;
 }
 
+.leftSide {
+    position: relative;
+}
+
 .areaPost {
     background-color: #FFF;
     padding: 40px;
+}
+
+.noticeImg {
+    width: 100%;
+}
+
+.notice .img {
+    width: 300px;
 }
 
 .areaPost .infos {
@@ -99,6 +115,7 @@
     color: #777;
     font-size: 18px;
     line-height: 25px;
+    word-break: break-all;
 }
 
 .principal div {
@@ -175,6 +192,11 @@
     margin-top: 30px;
 }
 
+.comments {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
 .formComment h2,
 .comments h2 {
     margin-bottom: 30px;
@@ -191,11 +213,10 @@
     height: 150px;
     outline: none;
     border: 1px solid #666;
-
 }
 
 .moreComments {
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 .form button,
@@ -291,7 +312,7 @@
     }
 
     .areaPost {
-        padding: 20px;
+        padding: 10px;
     }
 
     .areaPost .infos {
@@ -313,11 +334,16 @@
 
     .areaImage {
         position: relative;
-        width: 200px;
+        width: 190px;
     }
 
     .comments {
         padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .notice .img {
+        width: 200px;
     }
 
     .comments h2,

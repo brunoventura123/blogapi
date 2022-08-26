@@ -26,7 +26,7 @@ const SliderPosts = ({ posts }: Props) => {
                     <li
                         key={key}
                         className={styles.postItem}>
-                        <Image src={photos[key]} width={80} height={80} alt="Avatar" />
+                        <Image src={`${post.photos[0].url}${post.photos[0].token}`} width={80} height={80} alt="Avatar" />
                         <Link href={`/${post.category}/${post.id}`}>
                             <p className={styles.title}>
                                 {router.locale === 'pt' ? (post.title.length > 50) ? post.title.substring(0, 50) + '...' : post.title : (post.title.length > 50) ? post.titleen.substring(0, 50) + '...' : post.titleen}

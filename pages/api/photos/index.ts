@@ -8,8 +8,8 @@ const handlerGet: NextApiHandler = async (req, res) => {
 
 }
 const handlerPost: NextApiHandler = async (req, res) => {
-    const { url, postId } = req.body
-    const newPhoto = await apiPhotos.postPhoto(url, parseInt(postId as string))
+    const { url, token, postId } = req.body
+    const newPhoto = await apiPhotos.postPhoto(url as string, token as string, parseInt(postId as string))
     res.json({ status: true, newPhoto })
 }
 
