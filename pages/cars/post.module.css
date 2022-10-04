@@ -2,15 +2,10 @@
     padding: 20px 50px;
     display: flex;
     justify-content: space-between;
-    flex-direction: row;
 }
 
 .linkLine {
     padding: 30px 50px 10px 50px;
-}
-
-.linkLine span {
-    cursor: pointer;
 }
 
 .linkLine span:nth-child(1) {
@@ -19,7 +14,7 @@
 
 .linkLine span:hover {
     color: #df1010;
-
+    cursor: pointer;
 }
 
 .linkLine span:nth-child(3) {
@@ -28,26 +23,10 @@
 }
 
 .container .notice {
-    flex: 1;
     background-color: #FFF;
-    position: relative;
-}
-
-.container .notice div {
-    position: relative;
-}
-
-.container .notice .float {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.leftSide {
-    position: relative;
 }
 
 .areaPost {
-    background-color: #FFF;
     padding: 40px;
 }
 
@@ -61,12 +40,8 @@
 
 .areaPost .infos {
     color: #666;
-    font-size: 18px;
-}
-
-.areaPost .infos span,
-.areaPost .infos div {
     font-size: 16px;
+    display: flex;
 }
 
 .areaPost .infos a {
@@ -85,48 +60,33 @@
     color: #333;
 }
 
-.areaPost p,
-.areaPost .text {
-    margin-top: 20px;
-    color: #777;
-    font-size: 18px;
-    line-height: 25px;
-    float: left;
-}
-
-.areaPost span .img,
-.areaPost span .text {
-    display: inline-block;
-    text-align: justify;
-    float: left;
-}
-
-
-.areaPost .divImage {
-    float: left;
-}
-
 .principal {
     text-align: justify;
     color: #000;
     height: 100%;
     padding: 20px 0px;
-    text-indent: 5%;
+    text-indent: 3%;
     color: #777;
     font-size: 18px;
     line-height: 25px;
     word-break: break-all;
 }
 
-.principal div {
+.principal .areaImage {
     float: left;
     margin-right: 15px;
     text-indent: 0;
 }
 
+/* Area of news and more posts */
 .infoArea {
     width: 400px;
     padding: 0px 0px 0 30px;
+    position: relative;
+}
+
+.areaNews {
+    width: inherit;
 }
 
 .infoArea .infoAreaImage {
@@ -135,6 +95,7 @@
 
 .infoArea .morePosts {
     margin-top: 30px;
+    width: inherit;
 }
 
 .infoArea .morePosts h2 {
@@ -143,29 +104,24 @@
     padding: 10px 20px;
     color: #333;
     font-size: 30px;
+    width: 100%;
 }
 
 .infoArea .morePosts .areaPostMore {
     display: flex;
     margin-bottom: 20px;
     background-color: #FFF;
-    width: auto;
-    height: 80px;
-}
-
-.areaPostMore div {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: auto;
 }
 
 .areaPostMore img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100%;
 }
 
 .areaPostMore .titlePost {
     flex: 1;
-    padding: 0 0px;
     font-size: 14px;
     color: #555;
     display: flex;
@@ -185,6 +141,7 @@
     flex-direction: column;
 }
 
+/* Are of comments and post a new comment */
 .comments,
 .formComment {
     background-color: #FFF;
@@ -246,11 +203,6 @@
     color: #c70f0f;
 }
 
-.infos {
-    display: flex;
-    align-items: center;
-    text-align: justify;
-}
 
 .loginButton {
     outline: none;
@@ -266,9 +218,7 @@
     color: #df1010;
 }
 
-.areaNews {
-    width: 400px;
-}
+
 
 @media (max-width: 1075px) {
 
@@ -277,6 +227,8 @@
         width: 100%;
         padding: 20px;
     }
+
+
 
     .infoArea {
         margin-top: 20px;
@@ -287,14 +239,11 @@
     .areaNews {
         display: flex;
         align-items: center;
-        flex: 1;
-        width: 100%;
         gap: 20px;
     }
 
     .infoArea .infoAreaImage {
         padding-top: 0px;
-        flex: 1;
     }
 
     .linkLine {
@@ -305,6 +254,10 @@
 @media (max-width: 767px) {
     .container {
         padding: 10px;
+    }
+
+    .news {
+        width: 100%;
     }
 
     .areaNews {
@@ -333,13 +286,7 @@
     }
 
     .areaImage {
-        position: relative;
-        width: 190px;
-    }
-
-    .comments {
-        padding-right: 10px;
-        padding-left: 10px;
+        width: 200px;
     }
 
     .notice .img {
@@ -348,7 +295,6 @@
 
     .comments h2,
     .formComment h2 {
-        margin-bottom: 30px;
         padding: 0px 0 0 30px;
         font-size: 20px;
     }
@@ -364,10 +310,7 @@
         margin: 0;
     }
 
-    .form {
-        padding: 10px;
-    }
-
+    .form,
     .formComment {
         padding: 10px;
     }

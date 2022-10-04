@@ -6,7 +6,6 @@
 }
 
 .infos {
-    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -52,13 +51,9 @@
     color: #FFF;
 }
 
-
-.categories {
-    flex: 1;
-}
-
 .categories ul,
-.tags ul {
+.tags ul,
+.links ul {
     list-style: none;
 }
 
@@ -81,25 +76,10 @@
 }
 
 .categories h2,
-.tags h2 {
-    margin-bottom: 30px;
-    color: #333;
-}
-
-.tags {
-    flex: 1;
-}
-
-.links {
-    flex: 1;
-}
-
+.tags h2,
 .links h2 {
     margin-bottom: 30px;
-}
-
-.links ul {
-    list-style: none;
+    color: #333;
 }
 
 .links ul li {
@@ -158,14 +138,9 @@
     }
 
     .categories ul li,
-    .tags ul li {
-        padding: 7px;
-        margin: 0 10px 10px 0px;
-        font-size: 12px;
-    }
-
+    .tags ul li,
     .links ul li {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .links ul li .icon {

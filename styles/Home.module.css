@@ -52,7 +52,7 @@
     flex-direction: column;
     justify-content: flex-end;
     width: 100%;
-    background-image: linear-gradient(transparent, rgba(0, 0, 0, 1));
+    background-image: linear-gradient(transparent, rgba(0, 0, 0, .9), rgba(0, 0, 0, 1));
 }
 
 .slideHome .areaSlide .infos:hover h2 {
@@ -161,6 +161,10 @@
 
     }
 
+    .section {
+        padding: 20px;
+    }
+
     .categoriesArea {
         width: 100%;
         padding: 50px 30px 50px 0;
@@ -168,6 +172,10 @@
 
     .boxArea {
         grid-template-columns: 1fr;
+    }
+
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .cardsFeutered,
@@ -228,6 +236,7 @@
 
     .categoriesArea .title h2 {
         font-size: 22px;
+        padding: 0;
     }
 
     .newsLetter {
@@ -253,10 +262,6 @@
         line-height: 20px;
         padding: 0px;
     }
-
-    h2.title {
-        padding: 0;
-    }
 }
 
 @media (max-width: 550px) {
@@ -269,5 +274,17 @@
 
     .section {
         padding: 20px;
+    }
+
+    .slideHome .areaSlide .infos {
+        padding: 20px;
+    }
+
+    .slideHome .areaSlide .infos .span {
+        font-size: 12px;
+    }
+
+    .slideHome .areaSlide .infos .title {
+        font-size: 15px;
     }
 }

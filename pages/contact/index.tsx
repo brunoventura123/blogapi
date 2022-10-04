@@ -7,7 +7,6 @@ import localIcon from '../../public/images/local.svg'
 import Head from "next/head"
 import { FormEvent, useState } from "react"
 import axios from "axios"
-import { useRouter } from "next/router"
 import { useTranslation } from "next-i18next"
 import { GetServerSideProps } from "next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
@@ -20,7 +19,6 @@ type Props = {
 
 const Contact = ({ posts }: Props) => {
     const { t } = useTranslation()
-    const router = useRouter()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [subject, setSubject] = useState('')
@@ -44,7 +42,7 @@ const Contact = ({ posts }: Props) => {
                 setMenssage('')
 
                 setTimeout(() => {
-                    router.push('/')
+                    window.location.href = '/'
                 }, 1000)
             }
 
@@ -60,8 +58,6 @@ const Contact = ({ posts }: Props) => {
             posts={posts}
             t={[t('news'), t('room')]}
             cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
-
         >
             <div className={styles.container}>
                 <Head>

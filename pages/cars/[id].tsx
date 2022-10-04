@@ -1,8 +1,6 @@
 import Image from "next/image"
 import styles from './post.module.css'
-import carred from '../../public/images/carred.jpg'
 import beauty from '../../public/images/beauty.webp'
-import avatar from '../../public/images/avatar.jpg'
 import Link from "next/link"
 import axios from "axios"
 import Head from "next/head"
@@ -20,6 +18,7 @@ import { AuthUser } from "../../types/AuthUser"
 import apiPosts from "../../libs/apiPosts"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useTranslation } from "next-i18next"
+import { CurseWords } from '../../utils/curseWords'
 
 type Props = {
     cars: Post[]
@@ -28,6 +27,7 @@ type Props = {
 }
 
 const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
+
     const { t } = useTranslation()
     const { data: session, status: sessionStatus } = useSession()
     const router = useRouter()
@@ -38,6 +38,7 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
     const [commentList, setCommentList] = useState<Comment[]>([])
     const [post, setPost] = useState<Post>()
     const [countCom, setCountCom] = useState(1)
+    const [error, setError] = useState('')
 
 
     const postUnique = async () => {
@@ -62,16 +63,23 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
 
     const handleNewComment = async (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
+        setError('')
         if (menssage) {
-            const newComment = await axios.post(`/api/comments`,
-                { body: menssage, postId: post?.id, userId: session?.user.id })
-            setMenssage('')
-            getComments()
-            setShowMore(true)
-            return
+            if (CurseWords(menssage)) {
+                const newComment = await axios.post(`/api/comments`,
+                    { body: menssage, postId: post?.id, userId: session?.user.id })
+                setMenssage('')
+                getComments()
+                setShowMore(true)
+            } else {
+                setError('Não são aceitos esse tipo de linguagem')
+                setMenssage('')
+            }
 
+        } else {
+            setError('Preencha o campo com seu comentário.')
         }
-        return alert('Preencha o campo com seu comentário.')
+
     }
 
     const handleMoreComments = async () => {
@@ -95,14 +103,12 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
         postUnique()
         getComments()
     }, [])
-    console.log(post?.photos[0].url)
     const newDate = post?.createdAt.toString().substring(0, 10).split('-').reverse().join('/') as string
     return (
         <Theme
             posts={allPosts}
             t={[t('news'), t('room')]}
             cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <Head>
@@ -112,13 +118,12 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
                 <Link href={`/`}><span>{t('home')} /</span></Link>
                 <Link href="/cars"><span> {t('cars')} /</span></Link>
                 <span className={styles.blackTitle}> {router.locale === 'pt' ? post?.title : post?.titleen}</span>
-
             </div>
-            <section className={styles.container}>
-                <div className={styles.leftSide}>
+            <div className={styles.container}>
+                <section className={styles.leftSide}>
                     <div className={styles.notice}>
-                        <div><img className={styles.noticeImg} src={`${post?.photos[0].url}${post?.photos[0].token}`} alt="" /></div>
-                        <section className={styles.areaPost}>
+                        <img className={styles.noticeImg} src={`${post?.photos[0].url}${post?.photos[0].token}`} alt="" />
+                        <div className={styles.areaPost}>
                             <div className={styles.infos}>
                                 <span>
                                     <Link href={`/cars`}>{t('cars')}</Link>
@@ -132,10 +137,7 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
                                 <div className={styles.areaImage}><img className={styles.img} src={`${post?.photos[0].url}${post?.photos[0].token}`} alt="" /></div>
                                 {router.locale === 'pt' ? post?.body : post?.bodyen}
                             </div>
-
-
-                        </section>
-
+                        </div>
                     </div>
                     <div>
                         <div className={styles.comments}>
@@ -162,6 +164,9 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
                         {sessionStatus == 'authenticated' &&
                             <div className={styles.formComment}>
                                 <h2>{t('leaveComment')}</h2>
+                                {error &&
+                                    <div style={{ color: '#FFF', marginBottom: 10, marginLeft: 30, backgroundColor: '#df1010', width: 'fit-content', padding: 5 }}>{error}</div>
+                                }
                                 <form className={styles.form} onSubmit={handleNewComment}>
                                     <textarea
                                         placeholder={t('message')}
@@ -175,8 +180,8 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
                         }
                         {sessionStatus == 'unauthenticated' && <h2 className={styles.login}>{t('make')}<button onClick={() => signIn()} className={styles.loginButton}>Login</button> {t('post')}</h2>}
                     </div>
-                </div>
-                <div className={styles.infoArea}>
+                </section>
+                <section className={styles.infoArea}>
                     <div className={styles.areaNews}>
                         <div><NewsLetter news={t('newsMail')} /></div>
                         <div className={styles.infoAreaImage}>
@@ -189,16 +194,14 @@ const PostItem = ({ cars, loggedUser, allPosts }: Props) => {
                             <div
                                 key={k}
                                 className={styles.areaPostMore}>
-                                <div>
-                                    <Image src={avatar} width={80} height={80} alt="Avatar" />
-                                </div>
+                                <img width={100} height={70} src={`${i.photos[0].url}${i.photos[0].token}`} alt="Avatar" />
                                 <a href={`/cars/${i.id}`} className={styles.titlePost}>{router.locale === 'pt' ? i.title : i.titleen}</a>
                             </div>
 
                         ))}
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </Theme>
     )
 }

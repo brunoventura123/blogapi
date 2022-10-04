@@ -35,18 +35,3 @@ export const Theme = ({ children, title }: Props) => {
         </div>
     )
 }
-
-/*export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    // DRY = Dont Repeat Yourself
-    const session = await unstable_getServerSession(
-        context.req, context.res, authOptions
-    )
-    if (!session) return { redirect: { destination: '/login', permanent: true } }
-
-
-    return {
-        props: {
-            loggedUser: session.user
-        }
-    }
-}*/

@@ -30,14 +30,14 @@ export default {
         })
         return photoDel
     },
-    updatePhoto: async (id: number, url: string) => {
+    updatePhoto: async (id: number, url: string, token: string) => {
         const upPhoto = await prisma.photo.update({
             where: {
                 id,
 
             },
             data: {
-                url
+                url, token
             }
 
         })

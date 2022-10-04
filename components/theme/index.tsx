@@ -12,20 +12,19 @@ import { Up } from '../up'
 type Props = {
     children: ReactNode,
     cat: string[]
-    footer: string[]
     t: string[]
     posts: Post[]
 }
 
-export const Theme = ({ children, cat, footer, t, posts }: Props) => {
+export const Theme = ({ children, cat, t, posts }: Props) => {
     return (
         <div>
             <Logo t={t} />
             <NavBar cat={cat} postss={posts} />
-            <div className="container">
+            <section className="container">
                 {children}
-            </div>
-            <Footer footer={footer} />
+            </section>
+            <Footer />
             <Up />
         </div>
     )

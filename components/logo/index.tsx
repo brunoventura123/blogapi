@@ -6,8 +6,6 @@ import Image from 'next/image'
 type Props = {
     t: string[]
 }
-
-
 export const Logo = ({ t }: Props) => {
     return (
         <div className={styles.container}>

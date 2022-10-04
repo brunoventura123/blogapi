@@ -1,7 +1,7 @@
-import styles from './styles.module.css'
-import w from '../../public/images/w.jpg'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
+
+import styles from './styles.module.css'
+import Link from 'next/link'
 import Image from 'next/image'
 
 type Props = {
@@ -20,7 +20,7 @@ const CardItem = ({ id, url, category, title, date, token }: Props) => {
     const catTitle = `${router.locale === 'pt' ? ((catNew === 'Cars' ? 'Carros' : (catNew === 'Beauty') ? 'Beleza' : (catNew === 'Formula1') ? 'Fórmula 1' : (catNew === 'Food' ? 'Comida' : ''))) : ((catNew === 'Cars' ? 'Cars' : (catNew === 'Beauty') ? 'Beauty' : (catNew === 'Formula1') ? 'Formula 1' : (catNew === 'Food' ? 'Food' : '')))}`
 
     return (
-        <div className={styles.container}>
+        <article className={styles.container}>
             <Link href={`/${category}/${id}`}>
                 <div className={styles.card} >
                     <div className={styles.image}>
@@ -40,7 +40,7 @@ const CardItem = ({ id, url, category, title, date, token }: Props) => {
 
                 </div>
             </Link>
-        </div>
+        </article>
     )
 }
 export default CardItem

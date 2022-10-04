@@ -7,11 +7,6 @@ import api from '../libs/apiPosts'
 import TitleBar from '../components/titleBar'
 import CardItem from '../components/cardItem'
 
-import woman from '../public/images/woman.jpg'
-import foodIcon from '../public/images/food.jpg'
-import car from '../public/images/carred.jpg'
-import f1 from '../public/images/carsImages/1.jpg'
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation'
@@ -25,7 +20,6 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import apiPhotos from '../libs/apiPhotos'
 
 type Props = {
   posts: Post[]
@@ -36,17 +30,14 @@ type Props = {
   allPosts: Post[]
 }
 const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
-  const photos = [woman, f1, car, foodIcon]
   const router = useRouter()
   const { t } = useTranslation('common')
-  console.log(cars)
 
   return (
     <Theme
       posts={allPosts}
       t={[t('news'), t('room')]}
       cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-      footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
     >
       <div className={styles.container}>
         <Head>
@@ -59,7 +50,7 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
           <div className={styles.slidePosts}>
             <SliderPosts posts={posts} />
           </div>
-          <div className={styles.bannerAreaHome}>
+          <section className={styles.bannerAreaHome}>
             <Swiper
               slidesPerView={1}
               loop
@@ -95,8 +86,10 @@ const Home = ({ posts, cars, beauty, formula1, food, allPosts }: Props) => {
               </div>
               <CategoryItem cat={[t('cars'), t('formula1'), t('beauty'), t('food')]} />
             </div>
-          </div>
+          </section>
+
           <section className={styles.section}>
+
             <div>
               <TitleBar title={t('highlights')} all={t('all')} />
               <div className={styles.cardsFeutered}>

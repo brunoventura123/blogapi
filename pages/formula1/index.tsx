@@ -45,7 +45,6 @@ const Fomula1 = ({ formula1, posts }: Props) => {
             posts={posts}
             t={[t('news'), t('room')]}
             cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <div className={styles.container}>

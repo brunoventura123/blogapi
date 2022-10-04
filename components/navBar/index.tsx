@@ -24,8 +24,7 @@ export const NavBar = ({ cat, postss }: Props) => {
     const { data: session } = useSession()
 
     return (
-        <div className={styles.container}>
-
+        <aside className={styles.container}>
             <nav className={styles.nav}>
                 <div onClick={() => setIsOpen(!isOpen)} className={styles.menuIcon}>
                     <MenuIcon />
@@ -72,12 +71,12 @@ export const NavBar = ({ cat, postss }: Props) => {
                                 <li key={k}>
                                     {router.locale === 'pt' && search.length > 2 && p.title.toLowerCase().includes(lower) && router.asPath != `/${p.category}/${p.id}` &&
                                         <div className={styles.li}>
-                                            <Link href={`/${p.category}/${p.id}`}>{p.title.toLowerCase().includes(lower) ? p.title : ''}</Link>
+                                            <a href={`/${p.category}/${p.id}`}>{p.title.toLowerCase().includes(lower) ? p.title : ''}</a>
                                         </div>
                                     }
                                     {router.locale === 'en' && search.length > 2 && p.titleen.toLowerCase().includes(lower) && router.asPath != `/${p.category}/${p.id}` &&
                                         <div className={styles.li}>
-                                            <Link href={`/${p.category}/${p.id}`}>{p.titleen.toLowerCase().includes(lower) ? p.titleen : ''}</Link>
+                                            <a href={`/${p.category}/${p.id}`}>{p.titleen.toLowerCase().includes(lower) ? p.titleen : ''}</a>
                                         </div>
                                     }
 
@@ -93,7 +92,7 @@ export const NavBar = ({ cat, postss }: Props) => {
                     }
                     {session &&
                         <div className={styles.hello}>
-                            {cat[5]} <div style={{ color: '#df1010', marginLeft: '5px' }}>{session.user?.name.split(' ').splice(0, 1)}</div>.
+                            {cat[5]} <div style={{ color: '#df1010', marginLeft: '5px' }}>{`${session.user?.name.slice(0, 1).toUpperCase()}${session.user?.name.slice(1).split(' ').splice(0, 1)}`}</div>.
                             <button style={{ color: '#999' }} onClick={() => signOut()}>{cat[6]}</button>
                         </div>
                     }
@@ -109,7 +108,7 @@ export const NavBar = ({ cat, postss }: Props) => {
                 </div>
             </div>
 
-        </div >
+        </aside >
     )
 }
 

@@ -1,4 +1,3 @@
-import { sign } from "crypto";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from 'next-auth/providers/github'
@@ -6,6 +5,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
 import apiUser from '../../../libs/apiUsers'
 import { AuthUser } from "../../../types/AuthUser";
+import * as bcrypt from 'bcrypt'
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -35,7 +35,8 @@ export const authOptions: NextAuthOptions = {
                         return {
                             id: user.id,
                             name: user.name,
-                            email: user.email
+                            email: user.email,
+                            password: user.password
                         }
                     }
                 }

@@ -6,21 +6,12 @@
     height: 50px;
     background-color: #FFF;
     box-shadow: 0 4px 2px -2px gray;
-    margin-top: -1px;
-    position: relative;
-}
-
-.container nav {
     position: relative;
 }
 
 .menuIcon {
     display: none;
     width: fit-content;
-}
-
-.areaMenu {
-    display: flex;
 }
 
 .areaMenu2 {
@@ -30,9 +21,6 @@
 .contLink {
     display: flex;
     list-style: none;
-    padding: 0;
-    height: auto;
-    position: relative;
     transition: all ease .5s;
 }
 
@@ -43,23 +31,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     cursor: pointer;
 }
 
-.linkItem:nth-child(1) {
-    color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.linkItem:hover .linkItem:nth-child(1) {
-    color: #fff;
-}
-
-.linkItem:hover {
+.linkItem:hover,
+.linkActive {
     background-color: #df1010;
     color: #FFF;
 }
@@ -71,33 +47,14 @@
     padding: 15px 15px;
 }
 
-.linkItem a:hover {
+.linkItem a:hover,
+.linkActive a {
     color: #fff;
 }
 
-.linkActive {
-    color: #FFF;
-    background-color: #df1010;
-}
-
-.linkActive a {
-    color: #FFF;
-}
-
-
 .areaLoginSearch {
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative;
-    flex-direction: row;
-}
-
-.areaLoginSearch a {
-    text-decoration: none;
-    color: #0fb950;
-    font-weight: bold;
-    margin-left: 20px;
 }
 
 .input {
@@ -130,6 +87,10 @@
     cursor: pointer;
 }
 
+.areaLoginSearch {
+    position: relative;
+}
+
 .areaLoginSearch button {
     outline: none;
     border: 0;
@@ -143,23 +104,6 @@
 }
 
 .areaLoginSearch button:hover {
-    color: #df1010;
-}
-
-.locale {
-    display: flex;
-    list-style: none;
-}
-
-.locale a {
-    color: #fff;
-    text-decoration: none;
-    padding: 5px 10px;
-    color: #000;
-    font-weight: bold;
-}
-
-.locale a:hover {
     color: #df1010;
 }
 
@@ -185,6 +129,7 @@
     color: #333;
     font-weight: normal;
     text-align: left;
+    text-decoration: none;
 }
 
 .hello {
@@ -197,6 +142,24 @@
     flex-direction: row;
 }
 
+.locale {
+    display: flex;
+    list-style: none;
+    padding-left: 10px;
+}
+
+.locale a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    color: #000;
+    font-weight: bold;
+}
+
+.locale a:hover {
+    color: #df1010;
+}
+
 @media (max-width: 1075px) {
     .container {
         flex-direction: column;
@@ -205,7 +168,6 @@
     }
 
     .areaLoginSearch {
-        display: flex;
         padding: 10px 0;
         width: 100%;
     }
@@ -219,10 +181,6 @@
         width: 100%;
     }
 
-    .input input {
-        width: 100%;
-    }
-
     .linkItem {
         height: 40px;
         align-items: center;
@@ -230,29 +188,21 @@
 
     .list {
         top: 50px;
+
     }
 
     .areaUser {
-        display: flex;
         justify-content: space-between;
-
     }
 }
 
 @media (max-width: 767px) {
     .container {
         padding: 20px;
-
     }
 
     .hello {
         padding: 0;
-
-    }
-
-    .list {
-        width: 100%;
-
     }
 
     .menuIcon {
@@ -304,7 +254,6 @@
     }
 
     .areaUser {
-        display: flex;
         width: 100%;
         margin-top: 20px;
         justify-content: space-between;

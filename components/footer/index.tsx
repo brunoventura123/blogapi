@@ -8,15 +8,10 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useTranslation } from 'next-i18next';
 
-type Props = {
-    footer: string[]
-}
-
-
-export const Footer = ({ footer }: Props) => {
+export const Footer = () => {
     const { t } = useTranslation()
     return (
-        <div className={styles.container}>
+        <footer className={styles.container}>
             <div className={styles.infos}>
                 <Link href={`/`}><p>{t('news')}<span>{t('room')}</span></p></Link>
                 <p className={styles.text}>Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et</p>
@@ -65,6 +60,6 @@ export const Footer = ({ footer }: Props) => {
                     <Link href={`/contact`}><li><ArrowForwardIosIcon className={styles.icon} />{t('contact')}</li></Link>
                 </ul>
             </div>
-        </div>
+        </footer>
     )
 }

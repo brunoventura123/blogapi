@@ -8,16 +8,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
 }
 
 .listItem {
-    background-color: #FFF;
     margin-top: 20px;
     color: #FFF;
     background-position: center;
     background-size: cover;
-    width: 100%;
+
 }
 
 .listItem:nth-child(1) {

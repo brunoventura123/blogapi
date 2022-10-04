@@ -1,5 +1,4 @@
 .container {
-    width: 100%;
     padding: 20px 0px 10px 0px;
 }
 
@@ -28,8 +27,6 @@
 }
 
 @media (max-width:767px) {
-
-
     .container .title h2 {
         font-size: 20px;
     }

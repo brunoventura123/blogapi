@@ -46,11 +46,11 @@ model Post {
 }
 
 model Photo {
-  id     Int    @id @default(autoincrement())
-  url    String
+  id     Int      @id @default(autoincrement())
+  url    String[]
   token  String
   postId Int
-  Post   Post   @relation(fields: [postId], references: [id])
+  Post   Post     @relation(fields: [postId], references: [id])
 
   @@map("photos")
 }

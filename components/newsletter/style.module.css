@@ -1,11 +1,10 @@
 .container {
-    width: 370px;
-    position: relative;
+    width: 100%;
 }
 
 .container h2 {
     background-color: #FFF;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding: 10px 20px;
     color: #333;
     font-size: 30px;
@@ -14,7 +13,14 @@
 .box {
     background-color: #FFF;
     padding: 20px;
-    position: relative;
+}
+
+.box p.text {
+    font-size: 15px;
+    color: #777;
+    line-height: 25px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .box p {
@@ -22,14 +28,6 @@
     color: #777;
     margin-top: 5px;
     text-align: center;
-}
-
-p.text {
-    font-size: 15px;
-    color: #777;
-    line-height: 25px;
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 .input {
@@ -76,11 +74,16 @@ p.text {
 
 @media (max-width: 767px) {
 
+
     .container h2 {
-        font-size: 20px;
+        font-size: 22px;
     }
 
-    .container .text {
+    .box {
+        padding: 10px;
+    }
+
+    .container .box .text {
         font-size: 14px;
     }
 
@@ -88,13 +91,8 @@ p.text {
         font-size: 11px;
     }
 
-    .box {
-        padding: 10px;
-    }
-
-    .input1::placeholder,
-    .input .input2 {
-        font-size: 14px;
+    .input1::placeholder {
+        font-size: 12px;
     }
 
     .input .input2,

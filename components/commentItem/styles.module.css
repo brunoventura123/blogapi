@@ -1,44 +1,44 @@
 .container {
     padding: 30px;
-    display: flex;
-    background-color: #FFF;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
 }
 
-.areaPhoto {
-    margin-right: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid rgba(223, 16, 16, 0.212);
+.areaNameAndPhoto {
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
+.areaPhoto {
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(223, 16, 16, 0.212);
+    position: relative;
+}
+
+.areaPhoto img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+}
 
 .areaInfo {
-    display: flex;
-    justify-content: space-between;
     width: 100%;
-
 }
 
 .areaInfo .areaData {
-    padding-right: 50px;
     position: relative;
-    line-break: anywhere;
 }
 
-.areaInfo span {
+.areaNameAndPhoto span {
     color: #df1010;
     font-size: 14px;
 }
 
-.areaInfo .name {
+.areaNameAndPhoto .name {
     font-size: 14px;
-    margin-bottom: 10px;
 }
 
 .areaInfo .text {
@@ -46,34 +46,32 @@
     color: #666;
     font-size: 16px;
     padding-top: 10px;
+}
 
+.areaButton {
+    width: 100%;
+    text-align: end;
 }
 
 .button {
     font-size: 11px;
     margin-top: 20px;
-    padding: 5px 10px;
     border: 0;
     outline: none;
     background-color: transparent;
     color: #666;
     cursor: pointer;
     transition: all ease .2s;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-.button a {
-    text-decoration: none;
-    color: #777;
-    transition: all ease .2s;
-    width: 100%;
-    height: 100%;
+    text-align: end;
+    width: fit-content;
 }
 
 .button:hover {
     color: #333;
+}
+
+.button a {
+    text-decoration: none;
 }
 
 @media (max-width: 767px) {
@@ -81,16 +79,16 @@
         padding-left: 10px;
     }
 
+    .areaPhoto {
+        width: 30px;
+        height: 30px;
+    }
+
     .areaInfo .text {
         font-size: 14px;
     }
 
-    .areaInfo .areaData {
-        padding-right: 10px;
-    }
-
     .button {
-        padding: 0px;
         font-size: 8px;
     }
 }

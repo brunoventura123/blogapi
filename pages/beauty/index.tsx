@@ -30,7 +30,6 @@ const Beauty = ({ beauty, posts }: Props) => {
     const handleMorePosts = async () => {
         setLoading(true)
         const json = await axios.get(`/api/posts?page=${pageCount + 1}&qt=3&cat=beauty`)
-        console.log(json.data.posts)
         if (json.status) {
             if (json.data.postForCat.length === 0) {
                 setShowMore(false)
@@ -47,7 +46,6 @@ const Beauty = ({ beauty, posts }: Props) => {
             posts={posts}
             t={[t('news'), t('room')]}
             cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <div className={styles.container}>
@@ -86,7 +84,7 @@ const Beauty = ({ beauty, posts }: Props) => {
 }
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     // DRY = Dont Repeat Yourself
-    const beauty = await api.getPostForCat(1, 8, 'beauty')
+    const beauty = await api.getPostForCat(1, 4, 'beauty')
     const posts = await api.getPostForCat(0, 20, undefined)
     const t = await serverSideTranslations(locale as string, ['common'])
     return {

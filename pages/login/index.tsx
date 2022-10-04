@@ -30,12 +30,12 @@ const Login = () => {
         }
         setError('')
         setLoading(true)
+
         const request = await signIn('credentials', {
             redirect: false,
             email, password
         })
         setLoading(false)
-        console.log(request)
         if (request && request.ok) {
             if (router.query.callbackUrl) {
                 router.back()
@@ -43,7 +43,7 @@ const Login = () => {
                 router.push('/')
             }
         } else {
-            setError('Acesso negado')
+            setError('E-mail e/ou senha incorretos.')
         }
 
     }

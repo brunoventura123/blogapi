@@ -29,7 +29,6 @@ const Food = ({ food, posts }: Props) => {
     const handleMorePosts = async () => {
         setLoading(true)
         const json = await axios.get(`/api/posts?page=${pageCount + 1}&qt=3&cat=food`)
-        console.log(json.data.posts)
         if (json.status) {
             if (json.data.postForCat.length === 0) {
                 setShowMore(false)
@@ -46,7 +45,6 @@ const Food = ({ food, posts }: Props) => {
             posts={posts}
             t={[t('news'), t('room')]}
             cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <div className={styles.container}>

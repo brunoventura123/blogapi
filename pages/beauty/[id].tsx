@@ -21,6 +21,7 @@ import { signIn, useSession } from "next-auth/react"
 import { AuthUser } from "../../types/AuthUser"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useTranslation } from "next-i18next"
+import { CurseWords } from "../../utils/curseWords"
 
 
 type Props = {
@@ -41,6 +42,7 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
     const [commentList, setCommentList] = useState<Comment[]>([])
     const [postUni, setPostUni] = useState<Post>()
     const [countCom, setCountCom] = useState(1)
+    const [error, setError] = useState('')
 
     const postUnique = async () => {
         const { id } = router.query
@@ -60,16 +62,24 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
     }
     const handleNewComment = async (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
+        setError('')
         if (menssage) {
-            const newComment = await axios.post(`/api/comments`,
-                { body: menssage, postId: postUni?.id, userId: session?.user.id })
-            setMenssage('')
-            getComments()
-            setShowMore(true)
-            return
+            if (CurseWords(menssage)) {
+                const newComment = await axios.post(`/api/comments`,
+                    { body: menssage, postId: postUni?.id, userId: session?.user.id })
+                setMenssage('')
+                getComments()
+                setShowMore(true)
+                return
+            } else {
+                setError('Não são aceitos esse tipo de linguagem')
+                setMenssage('')
+            }
 
+        } else {
+            setError('Preencha o campo com seu comentário.')
         }
-        return alert('Preencha o campo com seu comentário.')
+
     }
 
     const handleMoreComments = async () => {
@@ -101,7 +111,6 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
             posts={posts}
             t={[t('news'), t('room')]}
             cat={[t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('hello'), t('logout'), t('login'), t('search')]}
-            footer={[t('room'), t('news'), t('category'), t('cars'), t('formula1'), t('beauty'), t('food'), t('contact'), t('page'), t('moreLinks'), t('announce'), t('privacyPolicy'), t('terms')]}
 
         >
             <Head>
@@ -161,6 +170,9 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
                         {sessionStatus == 'authenticated' &&
                             <div className={styles.formComment}>
                                 <h2>{t('leaveComment')}</h2>
+                                {error &&
+                                    <div style={{ color: '#FFF', marginBottom: 10, marginLeft: 30, backgroundColor: '#df1010', width: 'fit-content', padding: 5 }}>{error}</div>
+                                }
                                 <form className={styles.form} onSubmit={handleNewComment}>
                                     <textarea
                                         placeholder={t('message')}
@@ -188,9 +200,9 @@ const PostItem = ({ beauty, loggedUser, posts }: Props) => {
                             <div
                                 key={k}
                                 className={styles.areaPostMore}>
-                                <div>
-                                    <Image src={avatar} width={80} height={80} alt="Avatar" />
-                                </div>
+
+                                <Image width={100} height={70} src={`${i.photos[0].url}${i.photos[0].token}`} alt="Avatar" />
+
                                 <a href={`/beauty/${i.id}`} className={styles.titlePost}>{router.locale === 'pt' ? i.title : i.titleen}</a>
                             </div>
 

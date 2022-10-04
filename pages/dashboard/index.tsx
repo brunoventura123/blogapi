@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react"
 import { Input } from "../../components/dashboard/input"
 import { Theme } from "../../components/dashTheme/theme"
 import styles from './styles.module.css'
-import { PhotoApi } from '../../services/PhotoApi'
 import * as Photos from '../../services/photos';
 
 
@@ -34,8 +33,6 @@ const Dashboard = () => {
             if (result instanceof Error) {
                 alert(`${result.name} - ${result.message}`);
             } else {
-                //let newPhotoList = [photos];
-                //newPhotoList.push(result.url);
                 setLoading(false)
                 return setPhotos(result.url);
             }
@@ -58,8 +55,6 @@ const Dashboard = () => {
                 setTextEn('')
                 let token = photos.slice(-43)
                 let url = photos.slice(0, -43)
-                console.log('Url completa: ' + photos)
-                console.log('Token: ' + token, 'Url: ' + url)
                 const photoPost = await axios.post(`/api/photos`, {
                     url, token, postId: post.data.newPost.id
                 })
@@ -75,7 +70,7 @@ const Dashboard = () => {
                 <label htmlFor="file" className={styles.label}>
                     Escolha suas imagens <div style={{ fontSize: '11px', marginLeft: '5px' }}> (Apenas arquivos png, jpg e jpeg.)</div>
 
-                    <input type="file" name="image" />
+                    <input type="file" name="image" multiple />
 
                 </label>
                 <input type="submit" value="Enviar" />
@@ -99,12 +94,22 @@ const Dashboard = () => {
                     />
                 </label>
                 <label htmlFor="">
-                    <Input
-                        type="text"
-                        label="Categoria (cars, food, beauty, formula1)"
+                    <select
                         value={category}
-                        onChange={setCategory}
-                    />
+                        onChange={e => setCategory(e.target.value)}
+                        placeholder="Categorias"
+                        style={{
+                            width: '100%',
+                            padding: 10,
+                            outline: 'none',
+                            marginBottom: 20
+                        }}
+                    >
+                        <option value="cars">cars</option>
+                        <option value="beauty">beauty</option>
+                        <option value="formula1">formula1</option>
+                        <option value="food">food</option>
+                    </select>
                 </label>
 
                 <label htmlFor="">

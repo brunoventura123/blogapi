@@ -4,12 +4,15 @@ import * as bcrypt from 'bcrypt'
 
 const handlerGet: NextApiHandler = async (req, res) => {
     const { email, password } = req.body
+    //let hashPassword = await bcrypt.hash(password, 8)
     const user = await apiUsers.getUser(email, password)
-    res.json(user)
+    //const hashCompare = await bcrypt.compare(hashPassword, user?.password as string)
+
+    res.json({ status: true, user })
 }
 const handlerPost: NextApiHandler = async (req, res) => {
     const { name, email, password, avatar } = req.body
-    //let hashPassword = bcrypt.hashSync(password, 8)
+    //let hashPassword = await bcrypt.hash(password, 8)
     const newUser = await apiUsers.postUser(name, email, password, avatar)
     res.status(201).json({ status: true, newUser })
 }

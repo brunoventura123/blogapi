@@ -10,6 +10,7 @@ export const NewsLetter = ({ news }: Props) => {
     const { t } = useTranslation()
     const [email, setEmail] = useState('')
     const [show, setShow] = useState(false)
+
     const handleSubmit = () => {
         setShow(true)
         setTimeout(() => {
