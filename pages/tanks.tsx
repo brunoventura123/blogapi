@@ -27,7 +27,7 @@ const Tanks = () => {
             flexDirection: 'column',
             height: '100vh',
             backgroundColor: '#333',
-            color: '#FFF',
+            color: '#F2F2F2',
             paddingTop: '20px',
         }}>
             <Head>
